@@ -1,7 +1,3 @@
-# AdminLTE 3 VueJS
-
-![Example](example.png)
-
 ## requirements
 
 VueJS 3
