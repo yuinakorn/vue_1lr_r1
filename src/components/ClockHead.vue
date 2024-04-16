@@ -3,8 +3,8 @@
     <div class="col-lg-3 col-6" v-for="(item,index) in jdata_summary" :key="index">
       <div :class="getBoxClass(item.color)">
         <div class="inner">
-          <p style="font-size: 1.2rem">{{ item.name }}</p>
-          <h3>{{ item.value }}<sup style="font-size: 20px; font-weight: normal"> ราย</sup></h3>
+          <p style="font-size: 1.1rem">{{ item.name }}</p>
+          <h3 style="font-weight: 400;">{{ item.value }}<sup class="text-muted" style="font-size: 20px; font-weight: normal;"> ราย</sup></h3>
         </div>
         <div class="icon">
           <i class="ion ion-stats-bars"></i>
@@ -12,37 +12,11 @@
 <!--        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
       </div>
     </div>
-
-    <!--    <div class="col-lg-3 col-6">-->
-    <!--      <div class="small-box bg-warning">-->
-    <!--        <div class="inner">-->
-    <!--          <h3>2<sup style="font-size: 20px; font-weight: normal"> ราย</sup></h3>-->
-    <!--          <p>ผู้ป่วยมีความเสี่ยง</p>-->
-    <!--        </div>-->
-    <!--        <div class="icon">-->
-    <!--          <i class="ion ion-person-add"></i>-->
-    <!--        </div>-->
-    <!--        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--    <div class="col-lg-3 col-6">-->
-    <!--      <div class="small-box bg-danger">-->
-    <!--        <div class="inner">-->
-    <!--          <h3>6<sup style="font-size: 20px; font-weight: normal"> ราย</sup></h3>-->
-    <!--          <p>ผู้ป่วยส่งต่อ</p>-->
-    <!--        </div>-->
-    <!--        <div class="icon">-->
-    <!--          <i class="ion ion-pie-graph"></i>-->
-    <!--        </div>-->
-    <!--        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
     <div class="col-lg-3 col-6">
       <div class="small-box bg-info">
         <div class="inner text-center">
-          <p style="font-size: 1.2rem">เวลาปัจจุบัน</p>
-          <h3>{{ currentTime }}</h3>
+          <p style="font-size: 1.1rem">เวลาปัจจุบัน</p>
+          <h3 style="font-weight: 400;">{{ currentTime }}</h3>
         </div>
         <div class="icon">
           <i class="ion ion-bag"></i>

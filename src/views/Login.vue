@@ -315,7 +315,7 @@ export default {
             if (response.data.result === 200) {
               // เรียกฟังก์ชั่น createToken เพื่อสร้าง token
               this.createToken(this.selectedHospital, this.cid_thaid);
-              alert("เข้าสู่ระบบสำเร็จ")
+              // alert("เข้าสู่ระบบสำเร็จ")
             } else {
               this.showRedAlert();
             }
@@ -358,7 +358,7 @@ export default {
       });
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const status_code = response.status;
 
 

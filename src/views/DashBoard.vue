@@ -2,7 +2,7 @@
   <div class="content">
     <div class="container-fluid pt-3">
       <div class="row d-flex justify-content-between">
-        <h4 class="ml-2 mb-2">ข้อมูลวันที่ {{ subdate }} - {{ currentdate }}</h4>
+        <h4 class="ml-2 mb-2" style="font-weight: 400;">ข้อมูลวันที่ {{ subdate }} - {{ currentdate }}</h4>
         <span class="text-muted">อัพเดทเมื่อ {{ update_time }}</span>
       </div>
       <clock-head :jdata_summary="jdata_summary"/>
@@ -30,21 +30,21 @@
             </thead>
             <tbody>
             <tr v-for="(item,index) in hospitals" :key="index">
-              <td>
+              <td class="px-4">
                 <router-link :to="{ name: 'hospital', params: { hoscode: item.hcode } }">
                   {{ item.hosname }}
                 </router-link>
               </td>
               <td class="text-center">
-                <div class="badge bg-success rounded-pill px-3 font-badge" v-if="item.green >0">{{ item.green }}</div>
+                <div class="px-3 font-badge" v-if="item.green >0">{{ item.green }}</div>
                 <div v-else>-</div>
               </td>
               <td class="text-center">
-                <div class="badge bg-warning rounded-pill px-3 font-badge" v-if="item.yellow >0">{{ item.yellow }}</div>
+                <div class="px-3 font-badge" v-if="item.yellow >0">{{ item.yellow }}</div>
                 <div v-else>-</div>
               </td>
               <td class="text-center">
-                <div class="badge bg-danger rounded-pill px-3 font-badge" v-if="item.red >0">{{ item.red }}</div>
+                <div class="px-3 font-badge" v-if="item.red >0">{{ item.red }}</div>
                 <div v-else>-</div>
               </td>
             </tr>
@@ -135,7 +135,14 @@ export default {
 
 <style scoped>
 .font-badge {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   /*font-weight: normal !important;*/
 }
+.text-green {
+  color: #01a68c;
+}
+.text-yellow {
+  color: #ea9114;
+}
+
 </style>
