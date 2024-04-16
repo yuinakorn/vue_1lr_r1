@@ -539,7 +539,7 @@ export default {
     const an = this.$route.params.an
     this.an = an
     this.cid = this.$route.params.cid
-    const api_url = 'https://api-onelr.lphis.org/dashboard/patient/' + hoscode + '/' + an
+    const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/' + hoscode + '/' + an
     await axios.post(api_url)
         .then(response => {
           this.patients = response.data;
@@ -583,7 +583,7 @@ export default {
     },
 
     getHospital(hoscode) {
-      const api_url = 'https://api-onelr.lphis.org/dashboard/hospitals/'
+      const api_url = process.env.VUE_APP_API_URL + '/dashboard/hospitals/'
       axios.get(api_url)
           .then(response => {
             this.hospital = response.data;
@@ -607,7 +607,7 @@ export default {
       let config = {
         method: 'post',
         // maxBodyLength: Infinity,
-        url: 'https://api-onelr.lphis.org/progress/search/',
+        url: process.env.VUE_APP_API_URL + '/progress/search/',
         // url: 'http://localhost:8085/progress/search/',
         headers: {
           'Content-Type': 'application/json'

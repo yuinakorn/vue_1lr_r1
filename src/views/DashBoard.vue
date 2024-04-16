@@ -101,7 +101,7 @@ export default {
       this.sum_yellow = 0
       this.sum_red = 0
       this.update_time = new Date().toLocaleTimeString('th-TH', {hour12: false})
-      await axios.post('https://api-onelr.lphis.org/dashboard/hospitals/')
+      await axios.post(process.env.VUE_APP_API_URL + '/dashboard/hospitals/')
       // await axios.post('http://localhost:8085/dashboard/hospitals/')
           .then(response => {
             this.hospitals = response.data

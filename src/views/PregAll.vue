@@ -147,7 +147,7 @@ export default {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://api-onelr.lphis.org/dashboard/patients/',
+        url: process.env.VUE_APP_API_URL + '/dashboard/patients/',
         // url: 'http://localhost:8085/dashboard/patients/',
         headers: {
           'Content-Type': 'application/json'

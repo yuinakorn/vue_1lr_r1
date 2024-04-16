@@ -46,7 +46,7 @@ export default {
       try {
         const hoscode = this.$route.params.hoscode
         const an = this.$route.params.an
-        const apiUrl = `https://api-onelr.lphis.org/dashboard/chart/${hoscode}/${an}`;
+        const apiUrl = process.env.VUE_APP_API_URL + `/dashboard/chart/${hoscode}/${an}`;
         const response = await axios.post(apiUrl)
         const fhsData = response.data.find(item => Object.prototype.hasOwnProperty.call(item, 'fhs'));
         // const fhsValues = fhsData.fhs.map(item => item.value);

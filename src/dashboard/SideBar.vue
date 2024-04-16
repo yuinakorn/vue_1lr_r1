@@ -76,7 +76,7 @@ export default {
         this.username = decodedToken.username
       }
       axios
-          .get("https://api-onelr.lphis.org/dashboard/hospitals/")
+          .get(process.env.VUE_APP_API_URL + "/dashboard/hospitals/")
           .then(response => {
             const filteredData = response.data.filter(item => item.hoscode === this.hoscode);
             this.hosname = filteredData[0].hosname

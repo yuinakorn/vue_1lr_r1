@@ -175,8 +175,7 @@ router.beforeEach(async (to, from, next) => {
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
-                    // url: 'https://api-onelr.lphis.org/pregs/check/token/',
-                    url: 'https://api-onelr.lphis.org/auth/check/token/',
+                    url: process.env.VUE_APP_API_URL + '/auth/check/token/',
                     headers: {
                         'Content-Type': 'application/json'
                     },

@@ -878,7 +878,7 @@ export default {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://api-onelr.lphis.org/pregs/search/",
+      url: process.env.VUE_APP_API_URL + "/pregs/search/",
       headers: {
         "Content-Type": "application/json",
       },
@@ -980,7 +980,7 @@ export default {
       let config = {
         method: "put",
         maxBodyLength: Infinity,
-        url: "https://api-onelr.lphis.org/pregs/update/",
+        url: process.env.VUE_APP_API_URL + "/pregs/update/",
         headers: {
           "Content-Type": "application/json",
         },

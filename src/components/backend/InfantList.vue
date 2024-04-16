@@ -81,7 +81,7 @@ export default {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://api-onelr.lphis.org/pregs/",
+      url: process.env.VUE_APP_API_URL + "/pregs/",
       headers: {
         "Content-Type": "application/json",
       },

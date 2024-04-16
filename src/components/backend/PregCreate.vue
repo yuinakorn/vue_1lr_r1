@@ -28,88 +28,54 @@
                     <div class="input-group-prepend">
                       <div class="input-group-text">CID</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="cid"
-                      name="cid"
-                      id="cid"
-                      placeholder="รหัสประจำตัวประชาชน 13 หลัก"
-                      :class="changclassbyval(isButtonSearchEnable)"
-                      :title="showtextbyval(isButtonSearchEnable)"
-                      @input="validatecid(cid)"
-                      autocomplete="off"
-                      @keyup="cal_score"
-                      :disabled="!editdisable"
-                    />
+                    <input type="text" class="form-control" v-model="cid" name="cid" id="cid"
+                      placeholder="รหัสประจำตัวประชาชน 13 หลัก" :class="changclassbyval(isButtonSearchEnable)"
+                      :title="showtextbyval(isButtonSearchEnable)" @input="validatecid(cid)" autocomplete="off"
+                      @keyup="cal_score" :disabled="!editdisable" />
                   </div>
                 </div>
 
                 <div class="form-group mx-2">
                   <div v-if="editdisable">
-                    <button
-                      type="submit"
-                      class="btn btn-warning"
-                      :title="showtextbyval(isButtonSearchEnable)"
-                      :disabled="isButtonSearchEnable"
-                    >
+                    <button type="submit" class="btn btn-warning" :title="showtextbyval(isButtonSearchEnable)"
+                      :disabled="isButtonSearchEnable">
                       Search
                     </button>
                   </div>
                   <div v-else>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      title="reset ข้อมูล เพื่อเริ่มการค้นหาใหม่"
-                      @click="resetDataSearch()"
-                    >
+                    <button type="button" class="btn btn-danger" title="reset ข้อมูล เพื่อเริ่มการค้นหาใหม่"
+                      @click="resetDataSearch()">
                       reset ข้อมูล
                     </button>
                   </div>
                 </div>
 
                 <div class="form-group mx-2">
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-block mx-auto w-100 float-right"
-                    name="submit"
-                    @click="submitForm"
-                    :title="
-                      showtext(chkdatainput(), 'กรุณากรอกข้อมูลให้ครบถ้วน', '')
-                    "
-                    :disabled="chkdatainput()"
-                  >
+                  <button type="button" class="btn btn-primary btn-block mx-auto w-100 float-right" name="submit"
+                    @click="submitForm" :title="showtext(chkdatainput(), 'กรุณากรอกข้อมูลให้ครบถ้วน', '')
+              " :disabled="chkdatainput()">
                     <i class="fas fa-save"></i>
                     บันทึกข้อมูล
                   </button>
                 </div>
                 <div class="form-group mx-2" v-if="checkrefer()">
-                  <button
-                    class="animated-button1 btn text-light"
-                    type="button"
-                    @click="
-                      msgshowsuccess(
-                        'คำแนะนำ \nควรประสานส่งต่อทันที!!',
-                        'warning',
-                        true
-                      )
-                    "
-                  >
+                  <button class="animated-button1 btn text-light" type="button" @click="
+              msgshowsuccess(
+                'คำแนะนำ \nควรประสานส่งต่อทันที!!',
+                'warning',
+                true
+              )
+              ">
                     <span></span>
                     <span></span>
                     <span></span>
                     <span></span>
                     <div class="heartbeat-animation">
-                      <svg
-                        class="svg-inline--fa fa-trash fa-w-18"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 640 512"
-                      >
+                      <svg class="svg-inline--fa fa-trash fa-w-18" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 640 512">
                         <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path
-                          fill="currentColor"
-                          d="M0 48C0 21.5 21.5 0 48 0H368c26.5 0 48 21.5 48 48V96h50.7c17 0 33.3 6.7 45.3 18.7L589.3 192c12 12 18.7 28.3 18.7 45.3V256v32 64c17.7 0 32 14.3 32 32s-14.3 32-32 32H576c0 53-43 96-96 96s-96-43-96-96H256c0 53-43 96-96 96s-96-43-96-96H48c-26.5 0-48-21.5-48-48V48zM416 256H544V237.3L466.7 160H416v96zM160 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm368-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM176 80v48l-48 0c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h48v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V192h48c8.8 0 16-7.2 16-16V144c0-8.8-7.2-16-16-16H240V80c0-8.8-7.2-16-16-16H192c-8.8 0-16 7.2-16 16z"
-                        />
+                        <path fill="currentColor"
+                          d="M0 48C0 21.5 21.5 0 48 0H368c26.5 0 48 21.5 48 48V96h50.7c17 0 33.3 6.7 45.3 18.7L589.3 192c12 12 18.7 28.3 18.7 45.3V256v32 64c17.7 0 32 14.3 32 32s-14.3 32-32 32H576c0 53-43 96-96 96s-96-43-96-96H256c0 53-43 96-96 96s-96-43-96-96H48c-26.5 0-48-21.5-48-48V48zM416 256H544V237.3L466.7 160H416v96zM160 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm368-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM176 80v48l-48 0c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h48v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V192h48c8.8 0 16-7.2 16-16V144c0-8.8-7.2-16-16-16H240V80c0-8.8-7.2-16-16-16H192c-8.8 0-16 7.2-16 16z" />
                       </svg>
                     </div>
 
@@ -128,21 +94,13 @@
                         <div class="input-group-text">Admit Date</div>
                       </div>
                       <div class="input-group-append">
-                        <VueDatePicker
-                          v-model="date_select"
-                          format="yyyy-MM-dd HH:mm"
-                          ref="datePicker"
-                          :class="changclassbyval(chkempty(date_select))"
-                          :title="
-                            showtext(
-                              chkempty(date_select),
-                              'กรุณาระบุวันที่และเวลา',
-                              ''
-                            )
-                          "
-                          autocomplete="off"
-                          :disabled="editdisable"
-                        ></VueDatePicker>
+                        <VueDatePicker v-model="date_select" format="yyyy-MM-dd HH:mm" ref="datePicker"
+                          :class="changclassbyval(chkempty(date_select))" :title="showtext(
+              chkempty(date_select),
+              'กรุณาระบุวันที่และเวลา',
+              ''
+            )
+              " autocomplete="off" :disabled="editdisable"></VueDatePicker>
                         <!-- <VueDatePicker
                           v-model="date_select"
                           format="yyyy-MM-dd HH:mm"
@@ -160,16 +118,8 @@
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="position-absolute p-3"
-                    style="top: 0px; right: 0px"
-                  >
-                    <img
-                      v-if="image"
-                      :src="image"
-                      alt="Image"
-                      style="width: 148px; height: 178px"
-                    />
+                  <div class="position-absolute p-3" style="top: 0px; right: 0px">
+                    <img v-if="image" :src="image" alt="Image" style="width: 148px; height: 178px" />
                   </div>
                 </div>
                 <div class="row">
@@ -178,20 +128,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">คำนำหน้าชื่อ</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="title"
-                        :class="changclassbyval(chkempty(title))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(title), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" v-model="title" :class="changclassbyval(chkempty(title))"
+                        :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(title), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score()" />
                     </div>
                   </div>
                   <div class="form-group col-sm-6 col-md-4">
@@ -199,22 +140,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">ชื่อ</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="pname"
-                        id="pname"
-                        v-model="pname"
-                        :class="changclassbyval(chkempty(pname))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(pname), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="pname" id="pname" v-model="pname"
+                        :class="changclassbyval(chkempty(pname))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(pname), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score()" />
                     </div>
                   </div>
                   <div class="form-group col-sm-6 col-md-4">
@@ -222,22 +152,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">สกุล</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="lname"
-                        id="lname"
-                        v-model="lname"
-                        :class="changclassbyval(chkempty(lname))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(lname), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="lname" id="lname" v-model="lname"
+                        :class="changclassbyval(chkempty(lname))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(lname), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score()" />
                     </div>
                   </div>
                   <div class="form-group col-sm-6 col-md-4">
@@ -245,19 +164,10 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">CID</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control show-invalid"
-                        name="cid"
-                        id="cid"
-                        v-model="cid"
-                        :class="changclassbyval(isButtonSearchEnable)"
-                        :disabled="true"
-                        :title="showtextbyval(isButtonSearchEnable)"
-                        @input="validatecid(cid)"
-                        autocomplete="off"
-                        @keyup="cal_score"
-                      />
+                      <input type="text" class="form-control show-invalid" name="cid" id="cid" v-model="cid"
+                        :class="changclassbyval(isButtonSearchEnable)" :disabled="true"
+                        :title="showtextbyval(isButtonSearchEnable)" @input="validatecid(cid)" autocomplete="off"
+                        @keyup="cal_score" />
                     </div>
                   </div>
                   <div class="form-group col-sm-6 col-md-4">
@@ -265,22 +175,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">HN</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="hn"
-                        id="hn"
-                        v-model="hn"
-                        :class="changclassbyval(chkempty(hn))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(hn), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score"
-                      />
+                      <input type="text" class="form-control" name="hn" id="hn" v-model="hn"
+                        :class="changclassbyval(chkempty(hn))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(hn), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score" />
                     </div>
                   </div>
                   <div class="form-group col-sm-6 col-md-4">
@@ -288,22 +187,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">AN</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="an"
-                        id="an"
-                        v-model="an"
-                        :class="changclassbyval(chkempty(an))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(an), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score"
-                      />
+                      <input type="text" class="form-control" name="an" id="an" v-model="an"
+                        :class="changclassbyval(chkempty(an))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(an), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score" />
                     </div>
                   </div>
                   <div class="form-group col-sm-6 col-md-4">
@@ -311,23 +199,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">อายุ</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="age_y"
-                        id="age_y"
-                        v-model="age_y"
-                        @input="risk_age_y"
-                        :class="changclassbyval(chkempty(age_y))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(age_y), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score"
-                      />
+                      <input type="text" class="form-control" name="age_y" id="age_y" v-model="age_y"
+                        @input="risk_age_y" :class="changclassbyval(chkempty(age_y))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(age_y), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score" />
                       <div class="input-group-append">
                         <div class="input-group-text px-2" title="">ปี</div>
                       </div>
@@ -343,23 +219,11 @@
                           จํานวนการตั้งครรภ์
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="gravida"
-                        id="gravida"
-                        v-model="gravida"
-                        :class="changclassbyval(chkempty(gravida))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(gravida), 'กรุณากรอกข้อมูล', '')
-                        "
-                        @input="gravida = this.chknumber(gravida, 2)"
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="gravida" id="gravida" v-model="gravida"
+                        :class="changclassbyval(chkempty(gravida))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(gravida), 'กรุณากรอกข้อมูล', '')
+              " @input="gravida = this.chknumber(gravida, 2)" autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
                         <div class="input-group-text px-2" title="">ครั้ง</div>
                       </div>
@@ -372,23 +236,11 @@
                           จำนวนการคลอดบุตร
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="parity"
-                        id="parity"
-                        v-model="parity"
-                        @input="risk_parity"
-                        :class="changclassbyval(chkempty(parity))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(parity), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="parity" id="parity" v-model="parity"
+                        @input="risk_parity" :class="changclassbyval(chkempty(parity))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(parity), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
                         <div class="input-group-text px-2" title="">ครั้ง</div>
                       </div>
@@ -399,23 +251,11 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">อายุครรภ์</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="ga"
-                        id="ga"
-                        v-model="ga"
-                        :class="changclassbyval(chkempty(ga))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(ga), 'กรุณากรอกข้อมูล', '')
-                        "
-                        @input="ga = this.chknumber(ga, 2, true)"
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="ga" id="ga" v-model="ga"
+                        :class="changclassbyval(chkempty(ga))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(ga), 'กรุณากรอกข้อมูล', '')
+              " @input="ga = this.chknumber(ga, 2, true)" autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
                         <div class="input-group-text px-2" title="">
                           สัปดาห์
@@ -428,24 +268,16 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">การฝากครรภ์</div>
                       </div>
-                      <select
-                        class="form-select form-control"
-                        name="anc_check_up"
-                        id="anc_check_up"
-                        v-model="anc_check_up"
-                        :class="changclassbyval(chkempty(anc_check_up))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(anc_check_up),
-                                'กรุณาระบุข้อมูลการฝากครรภ์',
-                                ''
-                              )
-                        "
-                        @keyup="cal_score()"
-                      >
+                      <select class="form-select form-control" name="anc_check_up" id="anc_check_up"
+                        v-model="anc_check_up" :class="changclassbyval(chkempty(anc_check_up))" :disabled="editdisable"
+                        :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(anc_check_up),
+                  'กรุณาระบุข้อมูลการฝากครรภ์',
+                  ''
+                )
+              " @keyup="cal_score()">
                         <option value="1">ฝาก</option>
                         <option value="0">ไม่ฝาก</option>
                       </select>
@@ -457,32 +289,17 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">ฝากครรภ์</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="no_of_anc"
-                        id="no_of_anc"
-                        v-model="no_of_anc"
-                        :class="changclassbyval(chkempty(no_of_anc))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(no_of_anc),
-                                'กรุณากรอกข้อมูล',
-                                ''
-                              )
-                        "
-                        @input="no_of_anc = this.chknumber(no_of_anc, 2)"
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="no_of_anc" id="no_of_anc" v-model="no_of_anc"
+                        :class="changclassbyval(chkempty(no_of_anc))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(no_of_anc),
+                  'กรุณากรอกข้อมูล',
+                  ''
+                )
+              " @input="no_of_anc = this.chknumber(no_of_anc, 2)" autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
-                        <div
-                          class="input-group-text px-2"
-                          title="จำนวนครั้งที่มาฝากครรภ์"
-                        >
+                        <div class="input-group-text px-2" title="จำนวนครั้งที่มาฝากครรภ์">
                           ครั้ง
                         </div>
                       </div>
@@ -495,34 +312,18 @@
                           น้ําหนักก่อนตั้งครรภ์
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="weight_before_pregancy"
-                        id="weight_before_pregancy"
-                        v-model="weight_before_pregancy"
-                        @input="risk_weight_before_pregancy"
-                        :class="
-                          changclassbyval(chkempty(weight_before_pregancy))
-                        "
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(weight_before_pregancy),
-                                'กรุณากรอกข้อมูล',
-                                ''
-                              )
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="weight_before_pregancy" id="weight_before_pregancy"
+                        v-model="weight_before_pregancy" @input="risk_weight_before_pregancy" :class="changclassbyval(chkempty(weight_before_pregancy))
+              " :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(weight_before_pregancy),
+                  'กรุณากรอกข้อมูล',
+                  ''
+                )
+              " autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
-                        <div
-                          class="input-group-text px-2"
-                          title="กิโลกรัม (kg.)"
-                        >
+                        <div class="input-group-text px-2" title="กิโลกรัม (kg.)">
                           กก.
                         </div>
                       </div>
@@ -535,32 +336,18 @@
                           น้ําหนักวันมาคลอด
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="weight_at_delivery"
-                        id="weight_at_delivery"
-                        v-model="weight_at_delivery"
-                        @input="risk_weight_at_delivery"
-                        :class="changclassbyval(chkempty(weight_at_delivery))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(weight_at_delivery),
-                                'กรุณากรอกข้อมูล',
-                                ''
-                              )
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="weight_at_delivery" id="weight_at_delivery"
+                        v-model="weight_at_delivery" @input="risk_weight_at_delivery"
+                        :class="changclassbyval(chkempty(weight_at_delivery))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(weight_at_delivery),
+                  'กรุณากรอกข้อมูล',
+                  ''
+                )
+              " autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
-                        <div
-                          class="input-group-text px-2"
-                          title="กิโลกรัม (kg.)"
-                        >
+                        <div class="input-group-text px-2" title="กิโลกรัม (kg.)">
                           กก.
                         </div>
                       </div>
@@ -573,19 +360,10 @@
                           น้ําหนักที่เพิ่มขึ้น
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="weight_gain"
-                        id="weight_gain"
-                        v-model="weight_gain"
-                        readonly
-                      />
+                      <input type="text" class="form-control" name="weight_gain" id="weight_gain" v-model="weight_gain"
+                        readonly />
                       <div class="input-group-append">
-                        <div
-                          class="input-group-text px-2"
-                          title="กิโลกรัม (kg.)"
-                        >
+                        <div class="input-group-text px-2" title="กิโลกรัม (kg.)">
                           กก.
                         </div>
                       </div>
@@ -596,28 +374,13 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">ส่วนสูง</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="height"
-                        id="height"
-                        v-model="height"
-                        @input="risk_height"
-                        :class="changclassbyval(chkempty(height))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(chkempty(height), 'กรุณากรอกข้อมูล', '')
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="height" id="height" v-model="height"
+                        @input="risk_height" :class="changclassbyval(chkempty(height))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(chkempty(height), 'กรุณากรอกข้อมูล', '')
+              " autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
-                        <div
-                          class="input-group-text px-2"
-                          title="เซ็นติเมตร (cm.)"
-                        >
+                        <div class="input-group-text px-2" title="เซ็นติเมตร (cm.)">
                           ซม.
                         </div>
                       </div>
@@ -628,32 +391,18 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">ยอดมดลูกสูง</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="fundal_height"
-                        id="fundal_height"
-                        v-model="fundal_height"
-                        @input="risk_fundal_height"
-                        :class="changclassbyval(chkempty(fundal_height))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(fundal_height),
-                                'กรุณากรอกข้อมูล',
-                                ''
-                              )
-                        "
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="fundal_height" id="fundal_height"
+                        v-model="fundal_height" @input="risk_fundal_height"
+                        :class="changclassbyval(chkempty(fundal_height))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(fundal_height),
+                  'กรุณากรอกข้อมูล',
+                  ''
+                )
+              " autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
-                        <div
-                          class="input-group-text px-2"
-                          title="เซ็นติเมตร (cm.)"
-                        >
+                        <div class="input-group-text px-2" title="เซ็นติเมตร (cm.)">
                           ซม.
                         </div>
                       </div>
@@ -664,27 +413,15 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text px-2">Hematocrit</div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="hematocrit"
-                        id="hematocrit"
-                        v-model="hematocrit"
-                        :class="changclassbyval(chkempty(hematocrit))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(hematocrit),
-                                'กรุณากรอกข้อมูล',
-                                ''
-                              )
-                        "
-                        v-on:input="chkfloat"
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="hematocrit" id="hematocrit" v-model="hematocrit"
+                        :class="changclassbyval(chkempty(hematocrit))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(hematocrit),
+                  'กรุณากรอกข้อมูล',
+                  ''
+                )
+              " v-on:input="chkfloat" autocomplete="off" @keyup="cal_score()" />
                       <div class="input-group-append">
                         <div class="input-group-text px-2">%</div>
                       </div>
@@ -697,27 +434,16 @@
                           ประมาณการน้ําหนักเด็กด้วย ultrasound
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="ultrasound"
-                        id="ultrasound"
-                        v-model="ultrasound"
-                        :class="changclassbyval(chkempty(ultrasound))"
-                        :disabled="editdisable"
-                        :title="
-                          editdisable
-                            ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
-                            : showtext(
-                                chkempty(ultrasound),
-                                'กรุณากรอกข้อมูล',
-                                ''
-                              )
-                        "
-                        @input="ultrasound = this.chknumber(ultrasound, 4)"
-                        autocomplete="off"
-                        @keyup="cal_score()"
-                      />
+                      <input type="text" class="form-control" name="ultrasound" id="ultrasound" v-model="ultrasound"
+                        :class="changclassbyval(chkempty(ultrasound))" :disabled="editdisable" :title="editdisable
+                ? 'ไม่สามารถกรอกข้อมูลได้ เพราะไม่พบข้อมูลผู้ป่วยในระบบ กรุณาค้นหาผู้ป่วยก่อนกรอกข้อมูล'
+                : showtext(
+                  chkempty(ultrasound),
+                  'กรุณากรอกข้อมูล',
+                  ''
+                )
+              " @input="ultrasound = this.chknumber(ultrasound, 4)" autocomplete="off"
+                        @keyup="cal_score()" />
                       <div class="input-group-append">
                         <div class="input-group-text px-2">กรัม</div>
                       </div>
@@ -789,22 +515,16 @@
                         <td>{{ this.weight_gain }}</td>
                         <td>
                           <div v-if="weight_gain < 11.14">ต่ำกว่า 11.14</div>
-                          <div
-                            v-else-if="
-                              weight_gain >= 11.14 && weight_gain <= 22.14
-                            "
-                          >
+                          <div v-else-if="weight_gain >= 11.14 && weight_gain <= 22.14
+              ">
                             11.14-22.14
                           </div>
                           <div v-else>สูงกว่า 22.14</div>
                         </td>
                         <td>
                           <div v-if="weight_gain < 11.14">0</div>
-                          <div
-                            v-else-if="
-                              weight_gain >= 11.14 && weight_gain <= 22.14
-                            "
-                          >
+                          <div v-else-if="weight_gain >= 11.14 && weight_gain <= 22.14
+              ">
                             1.5
                           </div>
                           <div v-else>2.5</div>
@@ -832,11 +552,7 @@
                         <td></td>
                         <td></td>
                         <th>
-                          <span
-                            v-if="!chkdatainput()"
-                            class="text-danger fw-bold"
-                            >{{ this.total_score }}</span
-                          >
+                          <span v-if="!chkdatainput()" class="text-danger fw-bold">{{ this.total_score }}</span>
                         </th>
                       </tr>
                     </tbody>
@@ -850,11 +566,7 @@
                       </font>
                     </button>
                   </div>
-                  <div
-                    v-if="!chkdatainput()"
-                    class="col-sm-4"
-                    :class="total_color"
-                  >
+                  <div v-if="!chkdatainput()" class="col-sm-4" :class="total_color">
                     <button type="button" class="btn btn-block w-100 h-90">
                       <font size="4">
                         <div v-html="this.result_score"></div>
@@ -957,7 +669,7 @@ export default {
       this.hcode = decoded.hosCode;
       this.username = decoded.username;
       // eslint-disable-next-line
-    } catch (error) {}
+    } catch (error) { }
   },
   methods: {
     async search() {
@@ -982,7 +694,7 @@ export default {
         let config = {
           method: "post",
           maxBodyLength: Infinity,
-          url: "https://api-onelr.lphis.org/pregs/his/search/",
+          url: process.env.VUE_APP_API_URL + "/pregs/his/search/",
           headers: {
             "Content-Type": "application/json",
           },
@@ -1108,7 +820,7 @@ export default {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://api-onelr.lphis.org/pregs/create/",
+        url: process.env.VUE_APP_API_URL + "/pregs/create/",
         headers: {
           "Content-Type": "application/json",
         },
@@ -1543,20 +1255,24 @@ export default {
   },
 };
 </script>
-  
+
 <style scoped>
 .total_green {
   background-color: #4cda4c;
 }
+
 .total_yellow {
   background-color: #e9e556;
 }
+
 .total_red {
   background-color: #ee5c5c;
 }
+
 .total_start {
   background-color: #909090;
 }
+
 .show-invalid {
   border-color: #dc3545;
   padding-right: 2.25rem !important;
@@ -1565,6 +1281,7 @@ export default {
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
+
 .show-valid {
   border-color: #28a745;
   padding-right: 2.25rem !important;
@@ -1626,13 +1343,11 @@ export default {
   left: 0px;
   width: 100%;
   height: 2px;
-  background: -webkit-gradient(
-    linear,
-    right top,
-    left top,
-    from(rgba(43, 8, 8, 0)),
-    to(#d92626)
-  );
+  background: -webkit-gradient(linear,
+      right top,
+      left top,
+      from(rgba(43, 8, 8, 0)),
+      to(#d92626));
   background: linear-gradient(to left, rgba(43, 8, 8, 0), #d92626);
   -webkit-animation: 2s animateTop linear infinite;
   animation: 2s animateTop linear infinite;
@@ -1643,6 +1358,7 @@ export default {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
   }
+
   100% {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
@@ -1654,13 +1370,11 @@ export default {
   right: 0px;
   height: 100%;
   width: 2px;
-  background: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    from(rgba(43, 8, 8, 0)),
-    to(#d92626)
-  );
+  background: -webkit-gradient(linear,
+      left bottom,
+      left top,
+      from(rgba(43, 8, 8, 0)),
+      to(#d92626));
   background: linear-gradient(to top, rgba(43, 8, 8, 0), #d92626);
   -webkit-animation: 2s animateRight linear -1s infinite;
   animation: 2s animateRight linear -1s infinite;
@@ -1671,6 +1385,7 @@ export default {
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
   }
+
   100% {
     -webkit-transform: translateY(-100%);
     transform: translateY(-100%);
@@ -1682,13 +1397,11 @@ export default {
   left: 0px;
   width: 100%;
   height: 2px;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(rgba(43, 8, 8, 0)),
-    to(#d92626)
-  );
+  background: -webkit-gradient(linear,
+      left top,
+      right top,
+      from(rgba(43, 8, 8, 0)),
+      to(#d92626));
   background: linear-gradient(to right, rgba(43, 8, 8, 0), #d92626);
   -webkit-animation: 2s animateBottom linear infinite;
   animation: 2s animateBottom linear infinite;
@@ -1699,6 +1412,7 @@ export default {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
+
   100% {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
@@ -1710,13 +1424,11 @@ export default {
   left: 0px;
   height: 100%;
   width: 2px;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(rgba(43, 8, 8, 0)),
-    to(#d92626)
-  );
+  background: -webkit-gradient(linear,
+      left top,
+      left bottom,
+      from(rgba(43, 8, 8, 0)),
+      to(#d92626));
   background: linear-gradient(to bottom, rgba(43, 8, 8, 0), #d92626);
   -webkit-animation: 2s animateLeft linear -1s infinite;
   animation: 2s animateLeft linear -1s infinite;
@@ -1727,6 +1439,7 @@ export default {
     -webkit-transform: translateY(-100%);
     transform: translateY(-100%);
   }
+
   100% {
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
@@ -1736,18 +1449,24 @@ export default {
 <style>
 @keyframes heartbeat {
   0% {
-    transform: scale(1); /* ขนาดเริ่มต้น */
+    transform: scale(1);
+    /* ขนาดเริ่มต้น */
   }
+
   50% {
-    transform: scale(1.2); /* ขยายภาพ */
+    transform: scale(1.2);
+    /* ขยายภาพ */
   }
+
   100% {
-    transform: scale(1); /* ขนาดกลับสู่ขนาดเดิม */
+    transform: scale(1);
+    /* ขนาดกลับสู่ขนาดเดิม */
   }
 }
 
 .heartbeat-animation svg {
-  animation: heartbeat 1s infinite; /* ระยะเวลาที่ใช้ในการเล่น animation */
+  animation: heartbeat 1s infinite;
+  /* ระยะเวลาที่ใช้ในการเล่น animation */
 }
 
 .heartbeat-animation {
@@ -1755,6 +1474,7 @@ export default {
   /* width: 100px; ปรับขนาดของพื้นที่ SVG ตามต้องการ  */
   /* height: 100px; */
 }
+
 /* 
 .heartbeat-animation svg {
   width: 100%;

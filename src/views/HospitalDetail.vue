@@ -190,7 +190,7 @@ export default {
 
     async getPatients() {
       this.hoscode = await this.$route.params.hoscode
-      await axios.post('https://api-onelr.lphis.org/dashboard/hospital/' + this.hoscode)
+      await axios.post(process.env.VUE_APP_API_URL + '/dashboard/hospital/' + this.hoscode)
           // await axios.post('http://localhost:8085/dashboard/hospital/' + this.hoscode)
           .then(response => {
             this.patients = response.data;

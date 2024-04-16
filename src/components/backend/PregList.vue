@@ -327,7 +327,7 @@ export default {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://api-onelr.lphis.org/pregs/",
+        url: process.env.VUE_APP_API_URL + "/pregs/",
         headers: {
           "Content-Type": "application/json",
         },
@@ -381,7 +381,7 @@ export default {
             let config = {
               method: "delete",
               maxBodyLength: Infinity,
-              url: "https://api-onelr.lphis.org/pregs/delete/",
+              url: process.env.VUE_APP_API_URL + "/pregs/delete/",
               headers: {
                 "Content-Type": "application/json",
               },
@@ -536,7 +536,7 @@ export default {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://api-onelr.lphis.org/infants/",
+        url: process.env.VUE_APP_API_URL + "/infants/",
         headers: {
           "Content-Type": "application/json",
         },

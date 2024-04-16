@@ -2,8 +2,8 @@ version: '3'
 
 services:
   app:
-    image: 'nginx'
-    container_name: 'onelr'
+    image: 'yuinakorn/onelr_web_r1:1.0'
+    container_name: 'onelr_web_r1'
     restart: unless-stopped
     ports:
       - 8086:80

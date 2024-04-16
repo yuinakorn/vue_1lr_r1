@@ -44,7 +44,7 @@ export default {
       try {
         const hoscode = this.$route.params.hoscode
         const an = this.$route.params.an
-        const apiUrl = `https://api-onelr.lphis.org/dashboard/chart/${hoscode}/${an}`;
+        const apiUrl = process.env.VUE_APP_API_URL + `/dashboard/chart/${hoscode}/${an}`;
         const response = await axios.post(apiUrl);
         const bpData = response.data.find(item => Object.prototype.hasOwnProperty.call(item, 'bp'));
         this.data = bpData.bp.sort((a, b) => (a.update_time > b.update_time) ? 1 : -1);

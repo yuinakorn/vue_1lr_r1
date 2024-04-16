@@ -150,7 +150,7 @@ export default {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://api-onelr.lphis.org/progress/search/",
+      url: process.env.VUE_APP_API_URL + "/progress/search/",
       headers: {
         "Content-Type": "application/json",
       },
@@ -194,7 +194,7 @@ export default {
       let config = {
         method: "put",
         maxBodyLength: Infinity,
-        url: "https://api-onelr.lphis.org/progress/update/",
+        url: process.env.VUE_APP_API_URL + "/progress/update/",
         headers: {
           "Content-Type": "application/json",
         },
