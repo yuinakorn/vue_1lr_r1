@@ -2,18 +2,21 @@
   <div class="content">
     <div class="container-fluid pt-3">
       <div class="header mb-2">
-        <span class="text-muted">วันที่ {{ start_date }} ถึง {{ current_date }}</span>
+        <div class="justify-content-between">
+          <div class="mr-2" style="font-size:1.3rem">เคสขอคำปรึกษา</div>
+          <div class="text-muted">ระหว่างวันที่ {{ start_date }} ถึง {{ current_date }}</div>
+        </div>
       </div>
       <div class="row" v-for="(patient, index) in patients" :key="index">
-        <div class="col-md-12 col-lg-12">
-          <div class="card">
-            <div class="card-header border-1"
+        <div class="col">
+          <div class="card card-widget">
+            <div class="card-header"
               style="padding-top: 0.2rem!important; padding-bottom: 0!important; border-bottom: 0">
               <span class="ml-1 fw-600">{{ patient.hosname }}</span>
             </div>
             <div class="card-header" style="padding-top: 0.2rem!important;">
               <div class="user-block">
-                <img class="img-circle hover-zoom pt-picture" style="width: 45px; height: 45px;"
+                <img class="img-circle hover-zoom pt-picture" style="width: 45px; height: 45px"
                   :src="patient.image ? patient.image : 'images/user.png'" alt="patient_picture">
                 <div class="mb-1">
                   <span class="username" style="font-size: 1.2rem;">
@@ -24,12 +27,13 @@
                     <span v-if="patient.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
                     <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
-                    <span v-if="patient.hosname_consult"
-                      class="alert alert-danger-consult preg-status ml-2 pointer">
+                    <span v-if="patient.hosname_consult" @click="togglePopover"
+                      class="alert alert-danger-consult preg-status ml-2">
                       Consulted
                     </span>
                   </span>
                 </div>
+
                 <span class="description my-des2"><span style="color: black!important;">HN:</span> {{ patient.hn }}
                   <span class="ml-1" style="color: black!important;">AN:</span> {{ patient.an }}
                   <span class="ml-1" style="color: black!important;"> อายุ:</span> {{ patient.age_y }} ปี</span>
@@ -37,7 +41,7 @@
                 <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
                       class="far fa-address-card mr-1"></i></span>{{ patient.cid }}
                   <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
-                    dateFormat(patient.admit_date) }} น.
+            dateFormat(patient.admit_date) }} น.
                 </span>
 
               </div>
@@ -82,22 +86,22 @@
             <div class="card-footer">
               <div class="row">
                 <div><i class="fas fa-venus-mars icon-blue ml-4"></i> ครรภ์ที่ = <span class="text-muted">{{
-          patient.gravida }}</span></div>
+            patient.gravida }}</span></div>
                 <div><i class="fas fa-stethoscope icon-blue ml-4"></i> ANC = <span class="text-muted">{{
-          patient.no_of_anc }} ครั้ง</span>
+            patient.no_of_anc }} ครั้ง</span>
                 </div>
                 <div><i class="fas fa-child icon-blue ml-4"></i> GA = <span class="text-muted">{{
-          patient.ga
-        }} สัปดาห์</span></div>
+            patient.ga
+          }} สัปดาห์</span></div>
                 <div><i class="fas fa-ruler-vertical icon-blue ml-4"></i> ส่วนสูง = <span class="text-muted">{{
-            patient.height }} ซม.</span>
+              patient.height }} ซม.</span>
                 </div>
                 <div><i class="fas fa-weight icon-blue ml-4"></i> ส่วนต่าง นน. <span class="text-muted">{{
-          patient.weight_before_pregancy }} → {{
-          patient.weight_at_delivery
-        }} = {{ patient.weight_gain }} กก.</span></div>
+            patient.weight_before_pregancy }} → {{
+            patient.weight_at_delivery
+          }} = {{ patient.weight_gain }} กก.</span></div>
                 <div><i class="fas fa-arrows-alt-v icon-blue ml-4"></i> ยอดมดลูก = <span class="text-muted">{{
-          patient.fundal_height }} ซม.</span></div>
+            patient.fundal_height }} ซม.</span></div>
                 <div><i class="fas fa-vial icon-blue ml-4"></i> Hematocrit = <span
                     :class="{ 'text-muted': patient.hematocrit >= 30, 'text-red beat': patient.hematocrit <= 30 }">
                     {{ patient.hematocrit }} %
@@ -122,13 +126,14 @@
 import axios from "axios";
 
 export default {
-  name: "PregAll",
+  name: "PregAllConsult",
   data() {
     return {
       hoscode_main: '',
       pregs: [],
       patients: [],
       hospital_name: '',
+      start_date: '',
       current_date: '',
       update_time: '',
       score: '',
@@ -136,12 +141,16 @@ export default {
         image: ''
       },
       consultHosName: '',
-      isConsulted: false,
-      // isPopoverVisible: false,
+      isConsulted: false
     }
   },
   async created() {
     await this.getPatients();
+
+    setTimeout(() => {
+      // window.location.reload();
+    }, 1000);
+    
   },
   computed: {
     patientImage() {
@@ -154,27 +163,41 @@ export default {
     const token = localStorage.getItem('token');
     this.hoscode_main = JSON.parse(atob(token.split('.')[1])).hosCode;
 
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const thaiLocale = 'th-TH';
-    // console.log(date);
-    this.current_date = new Date().toLocaleDateString(thaiLocale, options)
-
-    setInterval(() => {
-      this.getPatients();
-    }, 30 * 1000) // 30 seconds
 
     this.getCurrentDateTime();
+    setInterval(() => {
+      this.getPatients();
+    }, 60 * 1000) // 60 seconds
+
+    this.getPatients();
+    
+    this.hadSeen();
+
   },
 
   methods: {
-    // showPopover () {
-    //   this.isPopoverVisible = true;
-    //   console.log(this.isPopoverVisible)
-    // },
-    // hidePopover () {
-    //   this.isPopoverVisible = false;
-    //   console.log(this.isPopoverVisible)
-    // },
+    async hadSeen() {
+      let config = {
+        method: 'post',
+        url: process.env.VUE_APP_API_URL + '/dashboard/consulted/',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          "token": localStorage.getItem('token')
+        })
+      };
+      console.log(config);
+
+      let response = await axios(config);
+      console.log(response.data);
+
+    },
+
+    reloadPage() {
+      // Reload the page
+      // window.location.reload();
+    },
 
     async getCurrentDateTime() {
       try {
@@ -203,8 +226,8 @@ export default {
       });
       let config = {
         method: 'post',
-        maxBodyLength: Infinity,
-        url: process.env.VUE_APP_API_URL + '/dashboard/patients/',
+        // maxBodyLength: Infinity,
+        url: process.env.VUE_APP_API_URL + '/dashboard/pregs_consult/',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -245,10 +268,6 @@ export default {
 </script>
 
 <style scoped>
-.pointer {
-  cursor: pointer;
-}
-
 .fw-600 {
   font-weight: 600;
 }
@@ -465,5 +484,4 @@ a {
 .dropdown:hover .dropbtn {
   background-color: #b8c6d4;
 }
-
 </style>

@@ -826,6 +826,7 @@ export default {
         },
         data: data,
       };
+      console.log(data);
       axios
         .request(config)
         .then((response) => {

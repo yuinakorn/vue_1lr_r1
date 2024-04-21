@@ -72,7 +72,7 @@
                   </div>
                   <a @click="openThaid()" class="btn btn-block btn-primary image-button">
                     <img src="/images/thaid.webp" alt="ThaiD">
-                    ลงชื่อใช้งานด้วย ThaID
+                    ลงชื่อใช้เข้างานด้วย ThaID
                   </a>
 
                   <div class="mt-4">
@@ -185,14 +185,14 @@ export default {
         this.province = this.selectedProvince
         this.hcode = this.selectedHospital
 
-        console.log("province " + this.province);
-        console.log("hcode " + this.hcode);
+        // console.log("province " + this.province);
+        // console.log("hcode " + this.hcode);
 
         const state = {
           state: `${this.serviceId}|${this.client_id_random}|${this.province}|${this.hcode}|${ipAddress}|${os}`,
         };
 
-        console.log("provice " + this.province);
+        // console.log("provice " + this.province);
         const state_encode = qs.stringify(state);
         const url = `${process.env.VUE_APP_URL_AUTH}/gen_qrcode/?${state_encode}`;
         // console.log('url ที่ขออนุญาต ' + url)()
@@ -307,7 +307,7 @@ export default {
         })
       };
       // use axios เอาตำแหน่งไปเช็คกับ his ของตนเอง
-      console.log(config)
+      // console.log(config)
       try {
         await axios.request(config)
           .then((response) => {
@@ -340,7 +340,7 @@ export default {
     createToken: async function (hoscode, cid) {
       this.loggingIn = true;
       // ใช้ token สร้างเอง
-      const url = process.env.VUE_APP_URL_AUTH + '/viewer/';
+      const url = process.env.VUE_APP_URL_AUTH + '/viewer/' + `?exp=${process.env.VUE_APP_EXPIRES_IN}`;
       alert 
       const response = await fetch(url, {
         method: 'POST',
@@ -412,7 +412,7 @@ export default {
     showRedAlert() {
       Swal.fire({
         title: 'ไม่สามารถเข้าใช้งานได้!!!',
-        text: 'กรุณาแจ้งไอทีของท่าน ตรวจสอบสิทธิในระบบ HIS อีกครั้ง',
+        text: 'ติดต่อไอทีของท่าน เพื่อตรวจสอบสิทธิการเข้าใช้งานระบบ',
         icon: 'error',
         confirmButtonText: 'OK',
         confirmButtonColor: '#016b5f',

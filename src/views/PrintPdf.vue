@@ -4,55 +4,55 @@
         <div class="row">
             <div class="d-flex justify-content-between col-12 mt-2 border-bottom">
                 <div class="col-4">
-                    <span>ชื่อ-สกุล: </span>
-                    <label class="pl-2">{{ patients.pname }} {{ patients.lname }}</label>
+                    <label>ชื่อ-สกุล: </label>
+                    <span class="pl-2">{{ patients.pname }} {{ patients.lname }}</span>
                 </div>
                 <div class="col">
-                    <span>โรงพยาบาล: </span>
-                    <label class="pl-2">{{ hospital_name }}</label>
+                    <label>โรงพยาบาล: </label>
+                    <span class="pl-2">{{ hospital_name }}</span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="d-flex col-12 border-bottom mt-2">
                 <div class="col-2">
-                    <span>HN: </span>
-                    <label class="pl-2">{{ patients.hn }}</label>
+                    <label>HN: </label>
+                    <span class="pl-2">{{ patients.hn }}</span>
                 </div>
                 <div class="col-2">
-                    <span>AN: </span>
-                    <label class="pl-2">{{ patients.an }}</label>
+                    <label>AN: </label>
+                    <span class="pl-2">{{ patients.an }}</span>
                 </div>
                 <div class="col-4">
-                    <span>Admit: </span>
-                    <label class="pl-2">{{ dateFormat(patients.admit_date) }} น.</label>
+                    <label>Admit: </label>
+                    <span class="pl-2">{{ dateFormat(patients.admit_date) }} น.</span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="d-flex col-12 border-bottom mt-2">
-                <span style="margin-left: 0.36rem;"> ครรภ์ที่ = </span>
-                <label style="margin-left:0.2rem">{{ patients.gravida }}</label>
+                <label style="margin-left: 0.36rem;"> ครรภ์ที่ = </label>
+                <span style="margin-left:0.2rem">{{ patients.gravida }}</span>
 
-                <span class="ml-3"> ANC = </span>
-                <label style="margin-left:0.2rem"> {{ patients.anc_check_up }} ครั้ง</label>
+                <label class="ml-3"> ANC = </label>
+                <span style="margin-left:0.2rem"> {{ patients.anc_check_up }} ครั้ง</span>
 
-                <span class="ml-3"> GA = </span>
-                <label style="margin-left:0.2rem">{{ patients.ga }} สัปดาห์</label>
+                <label class="ml-3"> GA = </label>
+                <span style="margin-left:0.2rem">{{ patients.ga }} สัปดาห์</span>
 
-                <span class="ml-3"> ส่วนสูง = </span>
-                <label style="margin-left:0.2rem"> {{ patients.height }} ซม.</label>
+                <label class="ml-3"> ส่วนสูง = </label>
+                <span style="margin-left:0.2rem"> {{ patients.height }} ซม.</span>
 
-                <span class="ml-3"> ส่วนต่าง นน. </span>
-                <label style="margin-left:0.2rem">จาก {{ patients.weight_before_pregancy }} ไป {{ patients.weight_at_delivery
+                <label class="ml-3"> ส่วนต่าง นน. </label>
+                <span style="margin-left:0.2rem">จาก {{ patients.weight_before_pregancy }} ไป {{ patients.weight_at_delivery
                 }} = {{ patients.weight_gain }}
-                    กก.</label>
+                    กก.</span>
 
-                <span class="ml-3">ยอดมดลูก = </span>
-                <label style="margin-left:0.2rem">{{ patients.fundal_height }} ซม.</label>
+                <label class="ml-3">ยอดมดลูก = </label>
+                <span style="margin-left:0.2rem">{{ patients.fundal_height }} ซม.</span>
 
-                <span class="ml-3"> Hematocrit = </span>
-                <label style="margin-left:0.2rem"> {{ patients.hematocrit }} % </label>
+                <label class="ml-3"> Hematocrit = </label>
+                <span style="margin-left:0.2rem"> {{ patients.hematocrit }} % </span>
             </div>
         </div>
         <div class="row">
@@ -76,7 +76,7 @@
         <div>
             <table class="table table-bordered text-center align-items-center">
                 <thead>
-                    <tr style="font-weight: bold;">
+                    <tr style="font-weight: 500;">
                         <td class="center-items" rowspan="2">ว/ด/ป เวลา</td>
                         <td class="center-items" rowspan="2">V/S</td>
                         <td colspan="3">UC</td>
@@ -87,7 +87,7 @@
                         <td>Med</td>
                         <td>หมายเหตุ</td>
                     </tr>
-                    <tr style="font-weight: bold;">
+                    <tr style="font-weight: 500;">
                         <td>D</td>
                         <td>I</td>
                         <td>แรง</td>
@@ -306,5 +306,9 @@ tbody {
 
 td {
     padding: 0.1rem !important;
+}
+
+label {
+    font-weight: 500!important;
 }
 </style> 

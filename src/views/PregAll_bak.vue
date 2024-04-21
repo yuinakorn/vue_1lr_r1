@@ -7,76 +7,51 @@
       <div class="row" v-for="(patient, index) in patients" :key="index">
         <div class="col-md-12 col-lg-12">
           <div class="card">
-            <div class="card-header border-1"
-              style="padding-top: 0.2rem!important; padding-bottom: 0!important; border-bottom: 0">
-              <span class="ml-1 fw-600">{{ patient.hosname }}</span>
-            </div>
-            <div class="card-header" style="padding-top: 0.2rem!important;">
-              <div class="user-block">
-                <img class="img-circle hover-zoom pt-picture" style="width: 45px; height: 45px;"
-                  :src="patient.image ? patient.image : 'images/user.png'" alt="patient_picture">
-                <div class="mb-1">
-                  <span class="username" style="font-size: 1.2rem;">
-                    <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid">
-                      <span v-if="patient.title">{{ patient.title }}</span>
-                      {{ patient.pname + " " + patient.lname }}
-                    </router-link>
+            <div class="card-header border-1">
+              <div class="d-flex">
+                <div>
+                  <img class="float-left img-circle hover-zoom pt-picture mr-3"
+                    :src="patient.image ? patient.image : 'images/user.png'" alt="patient_picture">
+                </div>
+                <p class="d-flex flex-column">
+                  <span class="text-bold text-lg"><span v-if="patient.title">
+                      {{ patient.title }}
+                    </span>{{ patient.pname + " " + patient.lname }}
                     <span v-if="patient.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
                     <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
-                    <span v-if="patient.hosname_consult"
-                      class="alert alert-danger-consult preg-status ml-2 pointer">
-                      Consulted
+                    <span v-if="isConsulted" id="is_consulted" class="alert alert-danger-consult preg-status ml-2">
+                      Consulted {{ consultHosName }}
                     </span>
                   </span>
-                </div>
-                <span class="description my-des2"><span style="color: black!important;">HN:</span> {{ patient.hn }}
-                  <span class="ml-1" style="color: black!important;">AN:</span> {{ patient.an }}
-                  <span class="ml-1" style="color: black!important;"> อายุ:</span> {{ patient.age_y }} ปี</span>
-
-                <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
-                      class="far fa-address-card mr-1"></i></span>{{ patient.cid }}
-                  <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
-                    dateFormat(patient.admit_date) }} น.
-                </span>
-
-              </div>
-              <!-- /.user-block -->
-              <div class="card-tools" style="padding-right: 1rem">
-                <div class="row">
-                  <div class="col">
-                  </div>
-                  <div class="col-auto">
-                    <span v-if="patient.hematocrit <= 30" class="alert alert-danger pulse">hematocrit ต่ำกว่า 30%</span>
-
-                    <span v-if="patient.ultrasound >= 3500" class="alert alert-danger pulse ml-3">น้ำหนักเด็ก(U/S)เกิน
-                      3500 กรัม</span>
-                    <!--                    <span class="ml-4"></span>-->
-                    <span :class="scoreClass(patient.cpd_risk_score)"> CPD. {{ patient.cpd_risk_score }}</span>
-                    <!-- <router-link :to="'/patient/'+patient.hcode+'/'+patient.an+'/'+patient.cid"
-                                 class="btn btn-outline btn-sm bg-light">
-                      <i class="fas fa-external-link-alt"></i> รายละเอียด
-                    </router-link> -->
-
-                    <div class="dropdown">
-                      <button class="dropbtn"><i class="fas fa-external-link-alt"></i> เพิ่มเติม</button>
-                      <div class="dropdown-content">
-                        <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid"><i
-                            class="fas fa-eye"></i> ดูข้อมูลเพิ่ม</router-link>
-                        <router-link v-if="this.hoscode_main === patient.hcode"
-                          :to="'/backend/preg_update/' + patient.hcode + '/' + patient.cid + '/' + patient.an"><i
-                            class="fas fa-edit"></i> แก้ไขประวัติ</router-link>
-                        <router-link v-if="this.hoscode_main === patient.hcode"
-                          :to="'/backend/progress_list/' + patient.hcode + '/' + patient.cid + '/' + patient.an + '/' + patient.hn"><i
-                            class="fas fa-clipboard"></i> บันทึก progress</router-link>
-                      </div>
-                    </div>
-
+                  <span>{{ hospital_name }}</span>
+                  <span class="description text-mutedd">HN: {{ patient.hn }} AN: {{ patient.an }}
+                    อายุ: {{ patients.age_y }} ปี</span>
+                  <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
+                        class="far fa-address-card mr-1"></i></span>{{ patient.cid }}
+                    <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
+            dateFormat(patients.admit_date) }} น.
+                  </span>
+                </p>
+                <div class="ml-auto d-flex text-right">
+                  <div>
+                    <span v-if="toAlarm" class="alert alert-danger pulse my-alert"><i class="fas fa-ambulance"></i>
+                      <strong> คำแนะนำ: </strong>ควรประสานให้ส่งต่อทันที !</span>
+                    <span :class="scoreClass(patients.cpd_risk_score)" style="font-size: 1.2rem"> CPD. {{
+            patient.cpd_risk_score }}</span>
                   </div>
                 </div>
-
+                <div class="card-tools">
+                  <div>
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                      <i class="fas fa-expand"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <!-- /.card-tools -->
             </div>
 
             <div class="card-footer">
@@ -137,7 +112,6 @@ export default {
       },
       consultHosName: '',
       isConsulted: false,
-      // isPopoverVisible: false,
     }
   },
   async created() {
@@ -167,15 +141,6 @@ export default {
   },
 
   methods: {
-    // showPopover () {
-    //   this.isPopoverVisible = true;
-    //   console.log(this.isPopoverVisible)
-    // },
-    // hidePopover () {
-    //   this.isPopoverVisible = false;
-    //   console.log(this.isPopoverVisible)
-    // },
-
     async getCurrentDateTime() {
       try {
         // Using a public time server endpoint
@@ -245,14 +210,6 @@ export default {
 </script>
 
 <style scoped>
-.pointer {
-  cursor: pointer;
-}
-
-.fw-600 {
-  font-weight: 600;
-}
-
 a {
   color: #000;
 }
@@ -465,5 +422,6 @@ a {
 .dropdown:hover .dropbtn {
   background-color: #b8c6d4;
 }
+
 
 </style>

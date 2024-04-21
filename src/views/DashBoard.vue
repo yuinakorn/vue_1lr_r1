@@ -145,4 +145,8 @@ export default {
   color: #ea9114;
 }
 
+thead th{
+  font-weight: 500!important;
+}
+
 </style>

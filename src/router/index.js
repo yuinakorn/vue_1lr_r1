@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Dashboard from '@/views/DashBoard.vue'
 import HospitalDetail from "@/views/HospitalDetail.vue";
 import PatientDetail from "@/views/PatientDetail.vue";
@@ -8,6 +8,7 @@ import Login from "@/views/Login.vue";
 import Logout from "@/views/Logout.vue";
 import PregList from "@/components/backend/PregList.vue";
 import PregAll from "@/views/PregAll.vue";
+import PregAllConsult from "@/views/PregAllConsult.vue";
 import PregUpdate from "@/components/backend/PregUpdate.vue";
 import ProgressList from "@/components/backend/ProgressList.vue";
 import ProgressCreate from "@/components/backend/ProgressCreate.vue";
@@ -66,6 +67,15 @@ const routes = [
         path: '/patients',
         name: 'patients',
         component: PregAll,
+        meta: {
+            layout: 'default-layout',
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/patients/conslut',
+        name: 'patients_conslut',
+        component: PregAllConsult,
         meta: {
             layout: 'default-layout',
             requiresAuth: true
@@ -166,12 +176,25 @@ router.beforeEach(async (to, from, next) => {
     const isAuthenticated = await new Promise((resolve) => {
 
         try {
+            // เพิ่มมาในส่วนของ auto refresh
+            // if (from && from.meta.refreshInterval) {
+            //     clearInterval(from.meta.timer);
+            // }
+            // if (to.meta.refreshInterval && !to.meta.timer) {
+            //     to.meta.timer = setInterval(() => {
+            //         router.go(); // this depends on your routing setup; might need adjustment
+            //     }, to.meta.refreshInterval);
+            // }
+            // next();
+            // end auto refresh
+
+
             const token = localStorage.getItem('token');
             // console.log("token => "+token)
             if (token === null) {
                 resolve(false);
             } else {
-                let data = JSON.stringify({"token": token});
+                let data = JSON.stringify({ "token": token });
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
@@ -211,6 +234,15 @@ router.beforeEach(async (to, from, next) => {
         next();
     }
 });
+
+// เพิ่มมาในส่วนของ auto refresh
+// router.afterEach((to, from) => {
+//     if (from && from.meta.refreshInterval) {
+//         clearInterval(from.meta.timer);
+//         delete from.meta.timer;
+//     }
+// });
+// end auto refresh
 
 
 export default router

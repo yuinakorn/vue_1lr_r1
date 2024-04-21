@@ -1,7 +1,7 @@
 <template>
   <div class="content">
-    <div class="container-fluid pt-3" >
-      <nav aria-label="breadcrumb" >
+    <div class="container-fluid pt-3">
+      <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="margin-bottom: 0.35rem !important;">
           <router-link :to="{ name: 'dashboard' }" class="breadcrumb-item">หน้าหลัก</router-link>
           <router-link :to="{ name: 'hospital' }" class="breadcrumb-item">{{ hospital_name }}</router-link>
@@ -10,11 +10,24 @@
       </nav>
       <div class="row">
         <div class="container-fluid pb-2">
-          <div class="d-flex justify-content-end">
-            <!-- make a link class btn -->
+          <div class="d-flex justify-content-between">
+            <!-- col1 -->
+            <div v-if="isConsulted" class="alert my-alert-consult alert-danger" role="alert">
+              <i class="fas fa-file-medical-alt beat"></i>
+              ส่งขอคำปรึกษาไปที่ <strong>{{ consultHosName }}</strong> แล้ว
+            </div>
+            <div v-else></div>
 
-            <!-- <a href="#" class="btn btn-primary"><i class="fas fa-print"></i> พิมพ์</a> -->
-            <router-link class="btn btn-primary" :to="'/print/'+ this.hoscode + '/' + this.an +'/'+ this.cid + '?hospital_name=' + hospital_name"><i class="fas fa-print"></i> พิมพ์</router-link>
+            <!-- col2 -->
+            <div>
+              <button class="btn btn-outline bg-light mr-2" @click="showConsultBox"><i class="fas fa-eye"></i> ส่ง
+                Consult</button>
+
+              <router-link class="btn btn-outline bg-light"
+                :to="'/print/' + this.hoscode + '/' + this.an + '/' + this.cid + '?hospital_name=' + hospital_name"><i
+                  class="fas fa-print"></i> พิมพ์</router-link>
+            </div>
+
           </div>
         </div>
       </div>
@@ -25,39 +38,39 @@
               <div class="d-flex">
                 <div>
                   <img class="float-left img-circle hover-zoom pt-picture mr-3"
-                       :src="patients.image ? patients.image : 'images/user.png'"
-                       alt="patient_picture">
+                    :src="patients.image ? patients.image : 'images/user.png'" alt="patient_picture">
                 </div>
                 <p class="d-flex flex-column">
-                  <span class="text-bold text-lg"><span v-if="patients.title">{{
-                      patients.title
-                    }}</span>{{ patients.pname + " " + patients.lname }}
-                  <span v-if="patients.status === 0"
-                        class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
-                      <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                  <span class="text-bold text-lg"><span v-if="patients.title">
+                      {{ patients.title }}
+                    </span>{{ patients.pname + " " + patients.lname }}
+                    <span v-if="patients.status === 0"
+                      class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
+                    <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                    <span v-if="isConsulted" id="is_consulted" class="alert alert-danger-consult preg-status ml-2">
+                      Consulted
+                    </span>
                   </span>
+                  <span class="fw-600">{{ hospital_name }}</span>
                   <span class="description text-mutedd">HN: {{ patients.hn }} AN: {{ patients.an }}
                     อายุ: {{ patients.age_y }} ปี</span>
                   <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
-                      class="far fa-address-card mr-1"></i></span>{{ patients.cid }}
-                    <span class="badge bg-info badge-bigger ml-3 mr-1"><i
-                        class="fas fa-procedures"></i></span> {{ dateFormat(patients.admit_date) }} น.
+                        class="far fa-address-card mr-1"></i></span>{{ patients.cid }}
+                    <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
+                      dateFormat(patients.admit_date) }} น.
                   </span>
                 </p>
-<!--                <div v-if="toAlarm" class="ml-auto alert alert-danger pulse text-alert">-->
-<!--                  <i class="fas fa-ambulance"></i> คำแนะนำ: ควรประสานให้ส่งต่อทันที !-->
-<!--                </div>-->
                 <div class="ml-auto d-flex text-right">
                   <div>
-                    <span v-if="toAlarm" class="alert alert-danger pulse my-alert"><i class="fas fa-ambulance"></i> <strong>คำแนะนำ: </strong>ควรประสานให้ส่งต่อทันที !</span>
-                    <span :class="scoreClass(patients.cpd_risk_score)" style="font-size: 1.2rem"><i class="fab fa-cloudscale"></i> CPD {{ patients.cpd_risk_score }}</span>
+                    <span v-if="toAlarm" class="alert alert-danger pulse my-alert"><i class="fas fa-ambulance"></i>
+                      <strong> คำแนะนำ: </strong>ควรประสานให้ส่งต่อทันที !</span>
+                    <span :class="scoreClass(patients.cpd_risk_score)" style="font-size: 1.2rem"> CPD. {{
+                    patients.cpd_risk_score }}</span>
                   </div>
                 </div>
                 <div class="card-tools">
                   <div>
-                    <button type="button"
-                            class="btn btn-tool"
-                            data-card-widget="maximize">
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize">
                       <i class="fas fa-expand"></i>
                     </button>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -66,35 +79,36 @@
                   </div>
                 </div>
               </div>
+
             </div>
             <div class="card-footer border-bottom-1">
               <div class="row">
-                <div><i class="fas fa-venus-mars icon-blue ml-4"></i> ครรภ์ที่ = <span
-                    class="text-mutedd">{{ patients.gravida }}</span>
+                <div><i class="fas fa-venus-mars icon-blue ml-4"></i> ครรภ์ที่ = <span class="text-mutedd">{{
+            patients.gravida }}</span>
                 </div>
-                <div><i class="fas fa-stethoscope icon-blue ml-4"></i> ANC = <span
-                    class="text-muted"> {{ patients.anc_check_up }}  ครั้ง</span></div>
+                <div><i class="fas fa-stethoscope icon-blue ml-4"></i> ANC = <span class="text-muted"> {{
+            patients.anc_check_up }} ครั้ง</span></div>
                 <div><i class="fas fa-child icon-blue ml-4"></i> GA = <span class="text-muted">{{
-                    patients.ga
-                  }} สัปดาห์</span></div>
-                <div><i class="fas fa-ruler-vertical icon-blue ml-4"></i> ส่วนสูง = <span
-                    class="text-muted"> {{ patients.height }}  ซม.</span>
+            patients.ga
+          }} สัปดาห์</span></div>
+                <div><i class="fas fa-ruler-vertical icon-blue ml-4"></i> ส่วนสูง = <span class="text-muted"> {{
+              patients.height }} ซม.</span>
                 </div>
-                <div><i class="fas fa-weight icon-blue ml-4"></i> ส่วนต่าง นน. <span
-                    class="text-muted">{{ patients.weight_before_pregancy }} → {{
-                    patients.weight_at_delivery
-                  }} = {{ patients.weight_gain }} กก.</span>
+                <div><i class="fas fa-weight icon-blue ml-4"></i> ส่วนต่าง นน. <span class="text-muted">{{
+            patients.weight_before_pregancy }} → {{
+            patients.weight_at_delivery
+          }} = {{ patients.weight_gain }} กก.</span>
                 </div>
-                <div><i class="fas fa-arrows-alt-v icon-blue ml-4"></i> ยอดมดลูก = <span
-                    class="text-muted">{{ patients.fundal_height }} ซม.</span></div>
+                <div><i class="fas fa-arrows-alt-v icon-blue ml-4"></i> ยอดมดลูก = <span class="text-muted">{{
+            patients.fundal_height }} ซม.</span></div>
                 <div><i class="fas fa-vial icon-blue ml-4"></i> Hematocrit = <span
-                    :class="{'text-muted': patients.hematocrit >= 30, 'text-red beat': patients.hematocrit <= 30}">
-                  {{ patients.hematocrit }} %
-                </span></div>
+                    :class="{ 'text-muted': patients.hematocrit >= 30, 'text-red beat': patients.hematocrit <= 30 }">
+                    {{ patients.hematocrit }} %
+                  </span></div>
                 <div><i class="fas fa-baby icon-blue ml-4"></i> Ultrasound = <span
-                    :class="{'text-muted': patients.ultrasound < 3500, 'text-red beat': patients.ultrasound >= 3500}">{{
-                    patients.ultrasound
-                  }} กรัม</span></div>
+                    :class="{ 'text-muted': patients.ultrasound < 3500, 'text-red beat': patients.ultrasound >= 3500 }">{{
+            patients.ultrasound
+          }} กรัม</span></div>
               </div>
             </div>
             <div class="card-body" style="padding-top: 0.4rem!important;">
@@ -103,87 +117,86 @@
                   <ul class="nav flex-column mylink">
                     <li class="nav-item">
                       <a class="nav-link">
-                        ประมาณน้ำหนักเด็ก (U/S)<span
-                          :class="{'float-right text-blue bigger-text font-weight-bold': patients.ultrasound < 3500,
-                          'float-right text-red heart bigger-text font-weight-bold': patients.ultrasound >= 3500}">
-                        {{ patients.ultrasound }}
-                    <span class="unit">กรัม</span></span>
+                        ประมาณน้ำหนักเด็ก (U/S)<span :class="{
+              'float-right font-weight-bold': patients.ultrasound < 3500,
+              'float-right text-red heart font-weight-bold': patients.ultrasound >= 3500
+            }">
+                          {{ patients.ultrasound }}
+                          <span class="unit">กรัม</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
                         ความเข้มเลือด (Hematocrit)
-                        <span :class="{'float-right bigger-text text-blue font-weight-bold': true,
-                        'float-right bigger-text text-red heart heartbeat font-weight-bold': patients.hematocrit <= 30 }">
-<!--                        <span class="float-right bigger-text text-blue font-weight-bold">-->
-                    {{ checkHemato(patients.hematocrit) }}
-                    <span class="unit"> %</span></span>
+                        <span :class="{
+            'float-right font-weight-bold': true,
+            'float-right text-red heart heartbeat font-weight-bold': patients.hematocrit <= 30
+          }">
+                          <!--                        <span class="float-right bigger-text text-blue font-weight-bold">-->
+                          {{ checkHemato(patients.hematocrit) }}
+                          <span class="unit"> %</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        ความสูงยอดมดลูก <span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                      {{ patients.fundal_height }}
-                    <span class="unit">ซม.</span></span>
+                        ความสูงยอดมดลูก <span class="float-right font-weight-bold">
+                          {{ patients.fundal_height }}
+                          <span class="unit">ซม.</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        ลักษณะน้ำคร่ำ<span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                      {{ mapArrayC07[c07Value] }}
-                    </span>
+                        ลักษณะน้ำคร่ำ<span class="float-right font-weight-bold">
+                          {{ mapArrayC07[c07Value] }}
+                        </span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
                         การตกเลือดหลังคลอด (PPH)
-                        <span :class="{'float-right bigger-text text-blue font-weight-bold': true,
-                        'float-right bigger-text text-red heart heartbeat font-weight-bold': lastValuePph > 300 }">
-                      {{ lastValuePph }}
-                    <span class="unit">มล.</span></span>
+                        <span :class="{
+            'float-right font-weight-bold': true,
+            'float-right text-red heart heartbeat font-weight-bold': lastValuePph > 300
+          }">
+                          {{ lastValuePph }}
+                          <span class="unit">มล.</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        ปากมดลูกเปิด (Cervix length) <span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                      {{ lastValuePartogram }}
-                    <span class="unit">ซม.</span></span>
+                        ปากมดลูกเปิด (Cervix length) <span class="float-right  font-weight-bold">
+                          {{ lastValuePartogram }}
+                          <span class="unit">ซม.</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        อัตราการเต้นหัวใจแม่ (HR) <span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                      {{ lastValueHr }}
-                    <span class="unit">ครั้ง/นาที</span></span>
+                        อัตราการเต้นหัวใจแม่ (HR) <span class="float-right font-weight-bold">
+                          {{ lastValueHr }}
+                          <span class="unit">ครั้ง/นาที</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        อัตราการเต้นหัวใจลูก (FHR) <span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                      {{ lastValueFhs }}
-                    <span class="unit">ครั้ง/นาที</span></span>
+                        อัตราการเต้นหัวใจลูก (FHR) <span class="float-right font-weight-bold">
+                          {{ lastValueFhs }}
+                          <span class="unit">ครั้ง/นาที</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        ความดันโลหิตแม่ (SBP/DBP) <span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                      {{ lastValueSbp }}/{{ lastValueDbp }}
-                    <span class="unit">mmHg.</span></span>
+                        ความดันโลหิตแม่ (SBP/DBP) <span class="float-right font-weight-bold">
+                          {{ lastValueSbp }}/{{ lastValueDbp }}
+                          <span class="unit">mmHg.</span></span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
                         การบีบรัดของมดลูก (interval/duration/intensity)<span
-                          class="float-right text-blue bigger-text font-weight-bold">
-                     {{ lastValueInterval }} นาที/{{ lastValueDuration }} วินาที/{{ lastValueIntensity }}
-                        <!--                    <span class="unit">นาที/ระดับความแรง</span>-->
-                      </span>
+                          class="float-right font-weight-bold">
+                          {{ lastValueInterval }} นาที / {{ lastValueDuration }} วินาที / {{ lastValueIntensity }}
+                          <!--                    <span class="unit">นาที/ระดับความแรง</span>-->
+                        </span>
                       </a>
                     </li>
                   </ul>
@@ -194,9 +207,7 @@
                   <div class="card">
                     <div class="card-header my-card-header">
                       <div class="card-tools">
-                        <button type="button"
-                                class="btn btn-tool"
-                                data-card-widget="maximize">
+                        <button type="button" class="btn btn-tool" data-card-widget="maximize">
                           <i class="fas fa-expand"></i>
                         </button>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -208,15 +219,14 @@
                     <div class="card-body box-profile my-card-body">
                       <div class="text-center">
                         <div class="d-flex justify-content-center">
-                          <div
-                              v-bind:class="{ 'coin text-bp bigger-text': true, 'bg-red': overRateLimitPartogram }">
+                          <div v-bind:class="{ 'coin text-bp bigger-text': true, 'bg-red': overRateLimitPartogram }">
                             {{ lastValuePartogram }}
                           </div>
                         </div>
                       </div>
 
                       <div class="text-center font-1p3rem">
-                        <i class="fas fa-burn beat"></i>
+                        <i class="fas fa-burn"></i>
                         Partogram
                       </div>
 
@@ -227,11 +237,11 @@
                       <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
                           <chart-partogram @last-data-partogram="handleLastDataPartogram"
-                                           @slow-partogram="handleSlowPartogram"/>
+                            @slow-partogram="handleSlowPartogram" />
                         </li>
                       </ul>
                     </div>
-                    
+
                   </div>
                 </div>
 
@@ -241,9 +251,7 @@
                   <div class="card">
                     <div class="card-header my-card-header">
                       <div class="card-tools">
-                        <button type="button"
-                                class="btn btn-tool"
-                                data-card-widget="maximize">
+                        <button type="button" class="btn btn-tool" data-card-widget="maximize">
                           <i class="fas fa-expand"></i>
                         </button>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -253,26 +261,26 @@
                     </div>
 
                     <div class="card-body box-profile my-card-body overflow-auto" style="height: 19.3rem">
-                      <i class="fas fa-burn beat"></i>
+                      <i class="fas fa-burn"></i>
                       <span class="ml-2">การบีบรัดของมดลูก</span>
                       <ul class="list-group list-group-unbordered mb-3">
                         <li class="my-list">
                           <table class="table table-striped" style="font-size: 0.8rem">
                             <thead class="sticky-top">
-                            <tr>
-                              <th scope="col">Time</th>
-                              <th scope="col">Interval</th>
-                              <th scope="col">Duration</th>
-                              <th scope="col">Intensity</th>
-                            </tr>
+                              <tr>
+                                <th scope="col">Time</th>
+                                <th scope="col">Interval</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Intensity</th>
+                              </tr>
                             </thead>
                             <tbody style="font-size: 0.85rem">
-                            <tr v-for="item in sortedDataC2" :key="item.cid">
-                              <td>{{ timeFormat(item.progress_date_time) }} น.</td>
-                              <td>{{ item.value }} นาที</td>
-                              <td>{{ item.value2 }} วินาที</td>
-                              <td>{{ mapArray[item.value3] }}</td>
-                            </tr>
+                              <tr v-for="item in sortedDataC2" :key="item.cid">
+                                <td>{{ timeFormat(item.progress_date_time) }} น.</td>
+                                <td>{{ item.value }} นาที</td>
+                                <td>{{ item.value2 }} วินาที</td>
+                                <td>{{ mapArray[item.value3] }}</td>
+                              </tr>
                             </tbody>
                           </table>
                         </li>
@@ -295,9 +303,7 @@
                         <div class="card">
                           <div class="card-header my-card-header">
                             <div class="card-tools">
-                              <button type="button"
-                                      class="btn btn-tool"
-                                      data-card-widget="maximize">
+                              <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                 <i class="fas fa-expand"></i>
                               </button>
                               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -315,7 +321,7 @@
                             </div>
 
                             <div class="text-center font-1p3rem">
-                              <i class="fas fa-heartbeat beat"></i>
+                              <i class="fas fa-heartbeat"></i>
                               HR
                             </div>
 
@@ -325,7 +331,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                               <li class="list-group-item">
-                                <chart-hr @last-data-hr="handleLastDataHr"/>
+                                <chart-hr @last-data-hr="handleLastDataHr" />
                               </li>
                             </ul>
                           </div>
@@ -337,9 +343,7 @@
                         <div class="card">
                           <div class="card-header my-card-header">
                             <div class="card-tools">
-                              <button type="button"
-                                      class="btn btn-tool"
-                                      data-card-widget="maximize">
+                              <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                 <i class="fas fa-expand"></i>
                               </button>
                               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -358,7 +362,7 @@
                             </div>
 
                             <div class="text-center font-1p3rem">
-                              <i class="fas fa-stethoscope beat"></i>
+                              <i class="fas fa-stethoscope"></i>
                               FHR
                             </div>
 
@@ -368,7 +372,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                               <li class="list-group-item">
-                                <chart-fhs @last-data-fhs="handleLastDataFhs"/>
+                                <chart-fhs @last-data-fhs="handleLastDataFhs" />
                               </li>
                             </ul>
 
@@ -381,9 +385,7 @@
                         <div class="card">
                           <div class="card-header my-card-header">
                             <div class="card-tools">
-                              <button type="button"
-                                      class="btn btn-tool"
-                                      data-card-widget="maximize">
+                              <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                 <i class="fas fa-expand"></i>
                               </button>
                               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -400,7 +402,7 @@
                               </div>
                             </div>
                             <div class="text-center font-1p3rem ">
-                              <i class="fas fa-arrows-alt-v beat"></i>
+                              <i class="fas fa-arrows-alt-v"></i>
                               SBP/DBP
                             </div>
 
@@ -410,7 +412,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                               <li class="list-group-item">
-                                <chart-bp @last-data-bp="handleLastDataBp"/>
+                                <chart-bp @last-data-bp="handleLastDataBp" />
                               </li>
                             </ul>
                           </div>
@@ -422,9 +424,7 @@
                         <div class="card">
                           <div class="card-header my-card-header">
                             <div class="card-tools">
-                              <button type="button"
-                                      class="btn btn-tool"
-                                      data-card-widget="maximize">
+                              <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                 <i class="fas fa-expand"></i>
                               </button>
                               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -436,15 +436,14 @@
                           <div class="card-body box-profile my-card-body">
                             <div class="text-center">
                               <div class="d-flex justify-content-center">
-                                <div
-                                    v-bind:class="{ 'coin text-bp bigger-text': true, 'bg-red': overRateLimitPph }">
+                                <div v-bind:class="{ 'coin text-bp bigger-text': true, 'bg-red': overRateLimitPph }">
                                   {{ lastValuePph }}
                                 </div>
                               </div>
                             </div>
 
                             <div class="text-center font-1p3rem">
-                              <i class="fas fa-burn beat"></i>
+                              <i class="fas fa-burn"></i>
                               PPH
                             </div>
 
@@ -454,7 +453,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                               <li class="list-group-item">
-                                <chart-pph @last-data-pph="handleLastDataPph"/>
+                                <chart-pph @last-data-pph="handleLastDataPph" />
                               </li>
                             </ul>
                           </div>
@@ -481,6 +480,8 @@ import ChartPartogram from "@/components/chart/ChartPartogram";
 import axios from "axios";
 import moment from "moment";
 
+import Swal from "sweetalert2";
+
 export default {
   name: "PatientDetail",
   components: {
@@ -492,6 +493,7 @@ export default {
   },
   data() {
     return {
+      token: localStorage.getItem('token'),
       lastValueFhs: null,
       lastUpdateFhs: '',
       lastValueHr: null,
@@ -515,7 +517,7 @@ export default {
       score: '',
       pregImage: require('@/assets/img/user.png'),
       toAlarm: false,
-      showAlert: false,
+      // showAlert: false,
       patientData: '',
       mapArray: [null, "mild", "moderate", "strong"],
       c07Data: '-',
@@ -530,7 +532,10 @@ export default {
       hospital_name: null,
       hoscode: '',
       an: '',
-      cid: ''
+      cid: '',
+      showPopup: false,
+      isConsulted: false,
+      consultHosName: '',
     };
   },
   async created() {
@@ -539,15 +544,56 @@ export default {
     const an = this.$route.params.an
     this.an = an
     this.cid = this.$route.params.cid
-    const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/' + hoscode + '/' + an
-    await axios.post(api_url)
-        .then(response => {
-          this.patients = response.data;
-          this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
-          this.score = this.patients.cpd_risk_score
-        })
+    // const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/' + hoscode + '/' + an
+    const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/'
+    let config = {
+      method: 'post',
+      url: api_url,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        "token": this.token,
+        "cid": this.cid,
+        "an": this.an,
+        "hoscode": this.hoscode,
+      })
+    }
+    console.log("config :", config)
+
+    try {
+      const response = await axios.request(config)
+      console.log(response.data)
+      this.patients = response.data;
+      this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
+      this.score = this.patients.cpd_risk_score
+
+      if (this.patients.hosname) {
+        this.consultHosName = this.patients.hosname
+        this.isConsulted = true;
+      } else {
+        this.isConsulted = false;
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+
+    // await axios.post(config)
+    //   .then(response => {
+    //     this.patients = response.data;
+    //     this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
+    //     this.score = this.patients.cpd_risk_score
+    //   })
   },
   mounted() {
+    // this.fetchConsultation();
+
+    // auto refresh page every 5 minutes
+    this.refreshInterval = setInterval(() => {
+      window.location.reload();
+    }, 5 * 60 * 1000); // 5 minutes
+
     this.getHospital(this.$route.params.hoscode);
     // Fetch data initially
     this.fetchData();
@@ -558,9 +604,139 @@ export default {
   beforeUnmount() {
     // Clear the interval to prevent memory leaks
     clearInterval(this.pollingInterval);
+    clearInterval(this.refreshInterval);
   },
 
   methods: {
+
+    // async fetchConsultation() {
+    //   const token = localStorage.getItem('token');
+    //   let config = {
+    //     method: 'post',
+    //     url: process.env.VUE_APP_API_URL + '/pregs/check_consulted/',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     data: JSON.stringify({
+    //       "hoscode": this.hoscode,
+    //       "an": this.an,
+    //       "cid": this.cid,
+    //       "token": token
+    //     })
+    //   };
+
+    //   try {
+    //     const response = await axios.request(config);
+    //     console.log(response.data);
+
+    //     if (response.data.length > 0) {
+    //       this.isConsulted = true;
+    //       this.consultName = response.data[0].hosname;
+    //     }
+
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+
+    async showConsultBox() {
+      const token = localStorage.getItem('token');
+      let config = {
+        method: 'post',
+        url: process.env.VUE_APP_API_URL + '/dashboard/hos_node/',
+        data: {
+          "token": token,
+        }
+      };
+
+      try {
+        const response = await axios.request(config);
+        console.log(response.data);
+
+        const dataArray = response.data;
+
+        var inProvince = dataArray.reduce((acc, curr) => {
+          acc[curr.hoscode_main] = curr.hosname;
+          return acc;
+        }, {});
+
+        console.log(inProvince);
+
+      } catch (error) {
+        console.log(error);
+      }
+
+      const { value: hcode } = await Swal.fire({
+        title: "ส่งขอคำปรึกษา",
+        input: "select",
+        inputOptions: {
+          "ในจังหวัด": inProvince,
+        },
+        inputPlaceholder: "เลือกโรงพยาบาล",
+        showCancelButton: true,
+        confirmButtonText: 'ยืนยัน',
+        cancelButtonText: 'ยกเลิก',
+        confirmButtonColor: '#7cb8e2',
+        cancelButtonColor: '#b9c2cb',
+        inputValidator: () => {
+          return new Promise((resolve) => {
+            // console.log(value);
+            resolve();
+          });
+        }
+      });
+      if (hcode) {
+        // ถ้าเลือกแล้ว ให้ส่ง request ไปที่ API ด้วย hcode ที่เลือก
+        // ส่งไป insert ลงใน table consult ก่อน
+        let config = {
+          method: 'post',
+          url: process.env.VUE_APP_API_URL + '/pregs/consult/',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: JSON.stringify({
+            "hoscode_main": this.hoscode,
+            "cid": this.cid,
+            "an": this.an,
+            "hoscode_consult": hcode,
+            "token": token
+          })
+        };
+        console.log({ "config ": config });
+
+        let response_db = await axios.request(config);
+
+        console.log({ "message": response_db.data.message });
+
+        if (response_db.data.message === "ok") {
+          let response = await axios.get(process.env.VUE_APP_API_URL + '/dashboard/hospital_name/' + hcode);
+          Swal.fire({
+            title: 'ส่งขอคำปรึกษา',
+            html: 'ส่งขอคำปรึกษาไปที่ ' + response.data.hosname,
+            icon: 'success',
+            confirmButtonText: 'ตกลง',
+            confirmButtonColor: '#7cb8e2',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
+        } else {
+          Swal.fire({
+            title: 'ส่งขอคำปรึกษา',
+            html: 'ไม่สามารถส่งขอคำปรึกษาได้',
+            icon: 'error',
+            confirmButtonText: 'ตกลง'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload(); // This will reload the page
+            }
+          });
+        }
+
+      } // end if hcode
+    },
+
     timeFormat(time) {
       return moment(time).format('HH:mm');
     },
@@ -576,7 +752,7 @@ export default {
 
     dateFormat(time) {
       // const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-      const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
       const thaiLocale = 'th-TH';
       const datetime = new Date(time);
       return datetime.toLocaleDateString(thaiLocale, options)
@@ -585,14 +761,14 @@ export default {
     getHospital(hoscode) {
       const api_url = process.env.VUE_APP_API_URL + '/dashboard/hospitals/'
       axios.get(api_url)
-          .then(response => {
-            this.hospital = response.data;
-            for (const item of this.hospital) {
-              if (item.hoscode === hoscode) {
-                this.hospital_name = item.hosname;
-              }
+        .then(response => {
+          this.hospital = response.data;
+          for (const item of this.hospital) {
+            if (item.hoscode === hoscode) {
+              this.hospital_name = item.hosname;
             }
-          })
+          }
+        })
     },
 
     async fetchData() {
@@ -606,9 +782,7 @@ export default {
 
       let config = {
         method: 'post',
-        // maxBodyLength: Infinity,
         url: process.env.VUE_APP_API_URL + '/progress/search/',
-        // url: 'http://localhost:8085/progress/search/',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -722,6 +896,10 @@ export default {
 </script>
 
 <style scoped>
+.fw-600 {
+  font-weight: 600;
+}
+
 .text-alert {
   font-size: 1.6rem;
   line-height: 1.4rem;
@@ -786,15 +964,17 @@ export default {
 @-webkit-keyframes pulse {
   0% {
     -webkit-box-shadow: 0 0 0 0 rgb(201, 50, 37);
-  //transform: scale(1);
+    /* transform: scale(1); */
   }
+
   70% {
     -webkit-box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
-  //transform: scale(1.1);
+    /* transform: scale(1.1); */
   }
+
   100% {
     -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
-  //transform: scale(1);
+    /* transform: scale(1); */
   }
 }
 
@@ -804,15 +984,17 @@ export default {
     box-shadow: 0 0 0 0 rgb(201, 50, 37);
     /*transform: scale(1);*/
   }
+
   70% {
     -moz-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
     box-shadow: 0 0 0 20px rgba(204, 169, 44, 0);
-  //transform: scale(1.1);
+    /* transform: scale(1.1); */
   }
+
   100% {
     -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
     box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
-  //transform: scale(1);
+    /* transform: scale(1); */
   }
 }
 
@@ -824,18 +1006,17 @@ export default {
   list-style-type: none;
 }
 
-.heart {
-//position: relative; animation: heartbeat 1s infinite;
-}
 
 
 @keyframes heartbeat {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
@@ -869,9 +1050,78 @@ export default {
 }
 
 .my-alert {
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
 }
 
+.alert-danger-consult {
+  padding: 0 0.5rem !important;
+  border-radius: 50px;
+  color: #be0315;
+  background-color: #f2f2f2 !important;
+}
+
+.alert-danger {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #be0315 !important;
+}
+
+.my-alert-consult {
+  margin-bottom: 0 !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.bg-danger {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #be0315 !important;
+}
+
+.bg-warning {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #FB9847 !important;
+}
+
+.bg-success {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #04c786 !important;
+}
+
+.bg-light {
+  background-color: #ced8e2 !important;
+  border-color: #ced8e2 !important;
+}
+
+.btn-primary {
+  background-color: #5d7289 !important;
+  border-color: #5d7289 !important;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.my-header-hospital {
+  padding-top: 0.2rem !important;
+  padding-bottom: 0 !important;
+  border-bottom: 0 !important;
+}
 </style>

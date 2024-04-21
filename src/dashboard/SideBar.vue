@@ -15,7 +15,7 @@
           <img src="images/ONe_LR_White_BG.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">ผู้ใช้งาน: {{ username }}</a>
+          <a class="d-block">ผู้ใช้งาน: <br>{{ username }}</a>
         </div>
       </div>
 
@@ -31,19 +31,22 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name:'patients' }" :class="{ 'nav-link active': isActive('/#/dashboard'), 'nav-link': !isActive('/#/dashboard') }">
-              <i class="nav-icon fas fa-layer-group"></i>
-              <p>ผู้ป่วยทั้งหมด <span class="right badge badge-success">New</span></p>
+            <router-link :to="{ name:'patients' }" :class="{ 'nav-link active': isActive('/#/patients'), 'nav-link': !isActive('/#/patients') }">
+              <i class="nav-icon fas fa-user-friends"></i>
+              <p>ผู้ป่วยในเครือข่าย </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{ name:'patients_conslut' }" :class="{ 'nav-link active': isActive('/#/patients/consult'), 'nav-link': !isActive('/#/patients/consult') }">
+              <i class="nav-icon fas fa-file-medical-alt"></i>
+              <p>เคส consult </p>
             </router-link>
           </li>
           <li class="nav-header">การจัดการ</li>
           <li class="nav-item">
             <a href="/#/backend/preg_list/" :class="{ 'nav-link active': isActive('/#/backend/preg_list'), 'nav-link': !isActive('/#/backend/preg_list/') }">
-              <i class="nav-icon fas fa-female"></i>
-              <p>
-                หญิงรอคลอด
-<!--                 <span class="right badge badge-danger">New</span>-->
-              </p>
+              <i class="nav-icon fas fa-edit"></i>
+              <p>ลงทะเบียนรายใหม่</p>
             </a>
           </li>
 
@@ -73,7 +76,7 @@ export default {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       if (decodedToken) {
         this.hoscode = decodedToken.hosCode
-        this.username = decodedToken.username
+        this.username = decodedToken.cid + '@' + decodedToken.hosCode
       }
       axios
           .get(process.env.VUE_APP_API_URL + "/dashboard/hospitals/")
