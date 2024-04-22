@@ -341,7 +341,7 @@ export default {
       this.loggingIn = true;
       // ใช้ token สร้างเอง
       const url = process.env.VUE_APP_URL_AUTH + '/viewer/' + `?exp=${process.env.VUE_APP_EXPIRES_IN}`;
-      alert 
+      alert
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -416,6 +416,10 @@ export default {
         icon: 'error',
         confirmButtonText: 'OK',
         confirmButtonColor: '#016b5f',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
       });
     },
     openAndCloseTab(url) {

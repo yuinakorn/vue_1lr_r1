@@ -559,11 +559,11 @@ export default {
         "hoscode": this.hoscode,
       })
     }
-    console.log("config :", config)
+    // console.log("config :", config)
 
     try {
       const response = await axios.request(config)
-      console.log(response.data)
+      // console.log(response.data)
       this.patients = response.data;
       this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
       this.score = this.patients.cpd_risk_score
@@ -651,7 +651,7 @@ export default {
 
       try {
         const response = await axios.request(config);
-        console.log(response.data);
+        // console.log(response.data);
 
         const dataArray = response.data;
 
@@ -660,7 +660,7 @@ export default {
           return acc;
         }, {});
 
-        console.log(inProvince);
+        // console.log(inProvince);
 
       } catch (error) {
         console.log(error);
@@ -702,11 +702,11 @@ export default {
             "token": token
           })
         };
-        console.log({ "config ": config });
+        // console.log({ "config ": config });
 
         let response_db = await axios.request(config);
 
-        console.log({ "message": response_db.data.message });
+        // console.log({ "message": response_db.data.message });
 
         if (response_db.data.message === "ok") {
           let response = await axios.get(process.env.VUE_APP_API_URL + '/dashboard/hospital_name/' + hcode);
@@ -788,6 +788,8 @@ export default {
         },
         data: data
       };
+
+      // console.log("config => ", config);
 
       try {
         const response = await axios.request(config);

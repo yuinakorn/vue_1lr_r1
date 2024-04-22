@@ -179,7 +179,7 @@ export default {
     async getCurrentDateTime() {
       try {
         // Using a public time server endpoint
-        const timeServerUrl = 'http://worldtimeapi.org/api/timezone/UTC';
+        const timeServerUrl = 'https://worldtimeapi.org/api/timezone/Asia/Bangkok';
 
         // Making a GET request to the time server endpoint
         const response = await fetch(timeServerUrl);
@@ -189,7 +189,7 @@ export default {
         const datetime = new Date(data.utc_datetime);
 
         // current date with Thai locale
-        this.current_date = datetime.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+        this.current_date = datetime.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
         this.start_date = new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
       } catch (error) {
         console.error('Error fetching date and time:', error);
@@ -398,25 +398,25 @@ a {
 .alert-danger {
   background-color: #fff !important;
   border-color: #fff !important;
-  color: #be0315 !important;
+  color: #cd0317 !important;
 }
 
 .bg-danger {
   background-color: #fff !important;
   border-color: #fff !important;
-  color: #be0315 !important;
+  color: #cd0317 !important;
 }
 
 .bg-warning {
   background-color: #fff !important;
   border-color: #fff !important;
-  color: #FB9847 !important;
+  color: #ffc107 !important;
 }
 
 .bg-success {
   background-color: #fff !important;
   border-color: #fff !important;
-  color: #04c7aa !important;
+  color: #00d181 !important;
 }
 
 .bg-light {

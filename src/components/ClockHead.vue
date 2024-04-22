@@ -3,7 +3,7 @@
     <div class="col-lg-3 col-6" v-for="(item,index) in jdata_summary" :key="index">
       <div :class="getBoxClass(item.color)">
         <div class="inner">
-          <p style="font-size: 1.1rem">{{ item.name }}</p>
+          <p style="font-size: 1.1rem"><i class="fas fa-circle mr-1"></i><span style="color: black;">{{ item.name }}</span></p>
           <h3 style="font-weight: 400;">{{ item.value }}<sup class="text-muted" style="font-size: 20px; font-weight: normal;"> ราย</sup></h3>
         </div>
         <div class="icon">
@@ -39,13 +39,40 @@ export default {
     };
   },
   mounted() {
-    setInterval(() => {
-      const now = new Date();
-      const hours = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
-      const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
-      const seconds = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
-      this.currentTime = `${hours}:${minutes}:${seconds}`;
-    }, 1000);
+    // setInterval(() => {
+    //   const now = new Date();
+    //   const hours = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
+    //   const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
+    //   const seconds = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
+    //   this.currentTime = `${hours}:${minutes}:${seconds}`;
+    // }, 1000);
+
+    const updateCurrentTime = () => {
+      fetch('https://worldtimeapi.org/api/timezone/Asia/Bangkok')
+        .then(response => response.json())
+        .then(data => {
+          // Extract the current time from the API response
+          const currentTime = new Date(data.utc_datetime);
+
+          // Format the time as H:i:s
+          const hours = currentTime.getHours() < 10 ? `0${currentTime.getHours()}` : currentTime.getHours();
+          const minutes = currentTime.getMinutes() < 10 ? `0${currentTime.getMinutes()}` : currentTime.getMinutes();
+          const seconds = currentTime.getSeconds() < 10 ? `0${currentTime.getSeconds()}` : currentTime.getSeconds();
+          const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+          // Update currentTime data property
+          this.currentTime = formattedTime;
+        })
+        .catch(error => {
+          console.error('Error fetching time:', error);
+        });
+    };
+    // Call the function immediately to update the time initially
+    updateCurrentTime();
+
+    // Call the function repeatedly at intervals of 1 second
+    setInterval(updateCurrentTime, 1000);
+
   },
   methods: {
     getBoxClass(color) {
@@ -95,7 +122,8 @@ h3 {
 
 .bg-success {
   background-color: #fff !important;
-  color: #01a68c !important;
+  /* color: #01a68c !important; */
+  color: #28a745 !important;
 }
 
 .bg-success h3 {
@@ -104,7 +132,8 @@ h3 {
 
 .bg-danger {
   background-color: #fff !important;
-  color: #de163d !important;
+  /* color: #de163d !important; */
+  color: #e90331 !important;
 }
 
 .bg-danger h3 {
@@ -113,7 +142,8 @@ h3 {
 
 .bg-warning {
   background-color: #fff !important;
-  color: #ea9114 !important;
+  /* color: #ea9114 !important; */
+  color: #ffc107 !important;
 }
 
 .bg-warning h3 {
