@@ -1641,7 +1641,7 @@ export default {
         },
         data: data,
       };
-      console.log(data);
+      // console.log(data);
       axios
         .request(config)
         .then((response) => {
@@ -1699,7 +1699,7 @@ export default {
         },
         data: data,
       };
-      console.log(config);
+      // console.log(config);
       axios
         .request(config)
         .then((response) => {
@@ -1760,7 +1760,7 @@ export default {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            console.log(delcid, delan, deltime, delcode);
+            // console.log(delcid, delan, deltime, delcode);
             const axios = require("axios");
             let data = JSON.stringify({
               token: this.token,
@@ -1778,7 +1778,7 @@ export default {
               },
               data: data,
             };
-            console.log(data);
+            // console.log(data);
             axios
               .request(config)
               .then((response) => {

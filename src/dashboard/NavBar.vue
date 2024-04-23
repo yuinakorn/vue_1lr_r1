@@ -60,15 +60,31 @@
           <router-link :to="{ name: 'patients_conslut' }" class="dropdown-item dropdown-footer">ดูทั้งหมด</router-link>
         </div>
       </li> -->
-
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
+          <i class="fas fa-inbox"></i>
+          <span class="badge badge-success navbar-badge">{{ this.notify }}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-sm-right">
+          <a href="#" class="dropdown-item">
+            <router-link :to="{ name: 'logout' }" class="nav-link" style="color: black!important;">
+              <i class="fas fa-code-branch"> </i> รายละเอียด Version
+            </router-link>
+          </a>
+        </div>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
           {{ hosname }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
+            <router-link :to="{ name: 'dashboard' }" class="nav-link" style="color: black!important;">
+              <i class="fas fa-history"></i> ประวัติการเข้าใช้งาน 
+            </router-link>
             <router-link :to="{ name: 'logout' }" class="nav-link" style="color: black!important;">
-              Logout <i class="fas fa-sign-out-alt"></i>
+              <i class="fas fa-sign-out-alt"></i> Logout 
             </router-link>
           </a>
         </div>

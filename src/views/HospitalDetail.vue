@@ -9,7 +9,7 @@
       </nav>
       <div class="header mb-2">
         <div style="font-size: 1.3rem">{{ hospital_name }}</div>
-        <span class="small text-muted">วันที่ {{start_date}} ถึง {{ current_date }}</span>
+        <span class="small text-muted">วันที่ {{ start_date }} ถึง {{ current_date }}</span>
       </div>
       <div class="row" v-for="(patient, index) in patients" :key="index">
         <div class="col">
@@ -27,7 +27,8 @@
                     <span v-if="patient.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
                     <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
-                    <span v-if="patient.hosname_consult" @click="togglePopover" class="alert alert-danger-consult preg-status ml-2">
+                    <span v-if="patient.hosname_consult" @click="togglePopover"
+                      class="alert alert-danger-consult preg-status ml-2">
                       Consulted
                     </span>
                   </span>
@@ -36,8 +37,8 @@
                 <span class="description my-des2"><span style="font-weight: 600;">HN:</span> {{ patient.hn }}
                   <span class="ml-1" style="font-weight: 600;">AN:</span> {{ patient.an }}
                   <span class="ml-1" style="font-weight: 600;"> อายุ:</span> {{
-                  patient.age_y
-                  }} ปี</span>
+            patient.age_y
+          }} ปี</span>
                 <span class="description my-des2" style="padding-top: 0.3rem;"><span
                     class="badge bg-info badge-bigger mr-1"><i class="far fa-address-card"></i> </span><span
                     style="font-weight: 600;">CID: </span> {{ patient.cid }}
@@ -69,10 +70,10 @@
                       <div class="dropdown-content">
                         <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid"><i
                             class="fas fa-eye"></i> ดูข้อมูลเพิ่ม</router-link>
-                        <router-link
+                        <router-link v-if="this.hoscode_main === patient.hcode"
                           :to="'/backend/preg_update/' + patient.hcode + '/' + patient.cid + '/' + patient.an"><i
                             class="fas fa-edit"></i> แก้ไขประวัติ</router-link>
-                        <router-link
+                        <router-link v-if="this.hoscode_main === patient.hcode"
                           :to="'/backend/progress_list/' + patient.hcode + '/' + patient.cid + '/' + patient.an + '/' + patient.hn"><i
                             class="fas fa-clipboard"></i> บันทึก progress</router-link>
                       </div>
@@ -109,7 +110,7 @@
                     {{ patient.hematocrit }} %
                   </span></div>
                 <div><i class="fas fa-baby icon-blue ml-4"></i> Ultrasound = <span
-                    :class="{ 'text-muted': patient.ultrasound < 3500, 'text-red beat': patient.ultrasound >= 3500}">{{
+                    :class="{ 'text-muted': patient.ultrasound < 3500, 'text-red beat': patient.ultrasound >= 3500 }">{{
                     patient.ultrasound
                     }} กรัม</span></div>
               </div>
@@ -146,13 +147,9 @@ export default {
   },
   // logic to check if the user has access to the hospital
   async beforeRouteEnter(to, from, next) {
-    const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+    const token = localStorage.getItem('token');
     const hoscode = to.params.hoscode;
-    if (token !== null) {
-      // const decodedToken = JSON.parse(atob(token.split('.')[1]));
-
-      // Check permission to access the hospital group
-      // use axios
+    if (token) {
       try {
         let config = {
           method: "post",
@@ -163,33 +160,37 @@ export default {
           data: {
             token: token
           }
-        }
-        let response = await axios(config)
-        let hoscode_group = response.data.hoscode_group
-        // console.log(hoscode_group)
+        };
+        let response = await axios(config);
+        let hoscode_group = response.data.hoscode_group;
+        console.log("hoscode_group: ",hoscode_group);
         let hosArray = hoscode_group.split(',');
-
         let found = hosArray.find(item => item === hoscode);
         if (found !== undefined) {
-          // console.log("hoscode อยู่ในชุดข้อมูล");
-          next();
+          console.log("hoscode อยู่ในชุดข้อมูล");
+          next(); // Call next to continue navigation
         } else {
-          // console.log("hoscode ไม่อยู่ในชุดข้อมูล");
+          console.log("hoscode ไม่อยู่ในชุดข้อมูล");
           // eslint-disable-next-line no-undef
           alertify.alert('คำเตือน', 'คุณไม่มีสิทธิ์เข้าถึงข้อมูลผู้ป่วยในโรงพยาบาลนี้', function () {
-            next(false);
-          }).set({buttonClass: 'btn btn-primary'});
-          next(false); // Prevent entering the component
+            next(false); // Pass false to prevent navigation
+          }).set({
+            buttonClass: 'btn btn-primary'
+          });
         }
-
       } catch (error) {
         console.error(error);
         // eslint-disable-next-line no-undef
-        alertify.alert('คำเตือน!', 'คุณไม่มีสิทธิ์เข้าถึงข้อมูลผู้ป่วยในโรงพยาบาลนี้', function () {
+        alertify.alert('คำเตือน!', 'คุณไม่มีสิทธิ์เข้าถึงข้อมูลผู้ป่วยในโรงพยาบาลนี้..', function () {
           next(false);
-        }).set({buttonClass: 'btn btn-primary'});
+        }).set({
+          buttonClass: 'btn btn-primary'
+        });
       }
-
+    } else {
+      // Handle case when token is null
+      alert('token is null')
+      next(false); // Prevent navigation
     }
   },
   created() {
@@ -288,7 +289,7 @@ export default {
 
 <style scoped>
 a {
-  color: #000!important;
+  color: #000 !important;
 }
 
 .text-bigger {

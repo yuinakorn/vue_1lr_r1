@@ -5,23 +5,23 @@
         <span class="ml-2">{{ this.provName }}</span>
       </div> -->
       <div class="row d-flex justify-content-between">
-        <h4 class="ml-2 mb-2" style="font-weight: 400;">ข้อมูลวันที่ {{ subdate }} - {{ currentdate }} 
-        <span>( {{ this.provName }} )</span>
+        <h4 class="ml-2 mb-2" style="font-weight: 400;">ข้อมูลวันที่ {{ subdate }} - {{ currentdate }}
+          <span>( {{ provName }} )</span>
         </h4>
         <span class="text-muted">อัพเดทเมื่อ {{ update_time }}</span>
       </div>
       <clock-head :jdata_summary="jdata_summary" />
       <div class="card">
         <div class="card-header border-0">
-          <h3 class="card-title">รายชื่อโรงพยาบาลในสังกัด แยกตาม CPD Risk Score</h3>
-          <div class="card-tools">
+          <span class="card-title">รายชื่อโรงพยาบาลในสังกัด แยกตาม CPD Risk Score</span>
+          <!-- <div class="card-tools">
             <a href="#" class="btn btn-tool btn-sm">
               <i class="fas fa-download"></i>
             </a>
             <a href="#" class="btn btn-tool btn-sm">
               <i class="fas fa-bars"></i>
             </a>
-          </div>
+          </div> -->
         </div>
         <div class="card-body table-responsive p-0">
           <table class="table table-striped table-bordered table-valign-middle">
@@ -77,21 +77,15 @@ export default {
       jdata_summary: '',
       subdate: '',
       currentdate: '',
-      update_time: ''
+      update_time: '',
+      provName: '',
+      provCode: ''
     }
   },
-  created() {
-    // decode token
-    // const token = localStorage.getItem('token');
-    // try {
-    //   const payload = token.split('.')[1];
-    //   const decoded = JSON.parse(atob(payload));
-    //   console.log(decoded.hosCode);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-
-    // this.getHospitals()
+  async created() {
+    // สั่งให้ทำงานทีละขั้นตอน
+    await this.getProvince(); // Wait for getProvince to finish
+    await this.getHospitals(); // Then call getHospitals
   },
   mounted() {
     this.getHospitals()
@@ -110,6 +104,7 @@ export default {
       await axios.post(process.env.VUE_APP_API_URL + '/dashboard/province/' + hcode)
         .then(response => {
           this.provName = 'จังหวัด' + response.data.province_name
+          this.provCode = response.data.province_code
         })
         .catch(error => {
           console.log(error)
@@ -120,39 +115,59 @@ export default {
       this.sum_yellow = 0
       this.sum_red = 0
       this.update_time = new Date().toLocaleTimeString('th-TH', { hour12: false })
-      await axios.post(process.env.VUE_APP_API_URL + '/dashboard/hospitals/')
-        // await axios.post('http://localhost:8085/dashboard/hospitals/')
-        .then(response => {
-          this.hospitals = response.data
-          // loop to sum total
-          this.hospitals.forEach((item) => {
-            this.sum_green += item.green
-            this.sum_yellow += item.yellow
-            this.sum_red += item.red
+
+      let config = {
+        method: "post",
+        url: process.env.VUE_APP_API_URL + '/dashboard/hospitals/',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          provcode: this.provCode
+        }
+      }
+      console.log(config)
+      try {
+        await axios(config)
+          .then(response => {
+            this.hospitals = response.data
+            // loop to sum total
+            this.hospitals.forEach((item) => {
+              this.sum_green += item.green
+              this.sum_yellow += item.yellow
+              this.sum_red += item.red
+            })
+            this.jdata_summary = [
+              { color: 'green', name: 'CPD score เสี่ยงน้อย', value: this.sum_green },
+              { color: 'yellow', name: 'CPD score เสี่ยงปานกลาง', value: this.sum_yellow },
+              { color: 'red', name: 'CPD score เสี่ยงสูง', value: this.sum_red }
+            ]
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const thaiLocale = 'th-TH';
+            const subdate = new Date(this.hospitals[0].subdate);
+            const currentdate = new Date(this.hospitals[0].currentdate);
+            this.subdate = subdate.toLocaleDateString(thaiLocale, options);
+            this.currentdate = currentdate.toLocaleDateString(thaiLocale, options);
+
           })
-          this.jdata_summary = [
-            { color: 'green', name: 'CPD score เสี่ยงน้อย', value: this.sum_green },
-            { color: 'yellow', name: 'CPD score เสี่ยงปานกลาง', value: this.sum_yellow },
-            { color: 'red', name: 'CPD score เสี่ยงสูง', value: this.sum_red }
-          ]
+          .catch(error => {
+            console.log(error)
+          })
+      } catch (error) {
+        console.log(error)
+      }
 
-          const options = { year: 'numeric', month: 'long', day: 'numeric' };
-          const thaiLocale = 'th-TH';
-          const subdate = new Date(this.hospitals[0].subdate);
-          const currentdate = new Date(this.hospitals[0].currentdate);
-          this.subdate = subdate.toLocaleDateString(thaiLocale, options);
-          this.currentdate = currentdate.toLocaleDateString(thaiLocale, options);
-
-        })
-        .catch(error => {
-          console.log(error)
-        })
     },
   }
 }
 </script>
 
 <style scoped>
+.card-header {
+  padding: 0.3rem 1.25rem 0.1rem 1.25rem !important;
+}
+
 .font-badge {
   font-size: 1.3rem;
   /*font-weight: normal !important;*/

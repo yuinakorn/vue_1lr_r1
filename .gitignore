@@ -12,3 +12,4 @@ src/components/.DS_Store
 src/router/index2.js
 test*
 *.bak
+*copy.vue
