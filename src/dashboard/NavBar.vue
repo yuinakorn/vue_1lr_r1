@@ -68,7 +68,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-sm-right">
           <a href="#" class="dropdown-item">
-            <router-link :to="{ name: 'logout' }" class="nav-link" style="color: black!important;">
+            <router-link :to="{ name: 'dashboard' }" class="nav-link" style="color: black!important;">
               <i class="fas fa-code-branch"> </i> รายละเอียด Version
             </router-link>
           </a>
