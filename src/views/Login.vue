@@ -170,7 +170,7 @@ export default {
         const response = await axios.get(`${process.env.VUE_APP_URL_AUTH}/client/`);
         // Set the received data to the component's data property
         this.data_client = response.data;
-        console.log(this.data_client);
+        // console.log(this.data_client);
       } catch (error) {
         console.log(error);
       }
