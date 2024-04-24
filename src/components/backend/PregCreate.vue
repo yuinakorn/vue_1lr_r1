@@ -846,8 +846,16 @@ export default {
 
             if (error.response) {
               console.error('Error response:', error.response);
-              let res = error.response.data;
-              errorMessage = res.detail || res.detail.message || errorMessage;
+              
+              if (error.response.data.detail.message) {
+                let message = error.response.data.detail.message;
+                if (message.includes('Duplicate entry')) {
+                  const parts = message.split('"');
+                  const specificErrorMessage = parts[1];
+                  errorMessage = 'ข้อมูลซ้ำ กรุณาตรวจสอบข้อมูล ' + specificErrorMessage;
+                }
+              }
+
             } else if (error.message) {
               // Network error occurred
               console.error('Network error:', error.message);
@@ -856,11 +864,16 @@ export default {
               // Other types of errors
               console.error('Unknown error:', error);
             }
+            Swal.fire({
+              title: "Error!",
+              text: "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + errorMessage + " )",
+              icon: "error"
+            });
 
-            this.msgshowsuccess(
-              "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + errorMessage + " )",
-              "error"
-            );
+            // this.msgshowsuccess(
+            //   "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + errorMessage + " )",
+            //   "error"
+            // );
           });
       }
       catch (error) {

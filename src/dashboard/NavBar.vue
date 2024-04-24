@@ -64,7 +64,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
           <i class="fas fa-inbox"></i>
-          <span class="badge badge-success navbar-badge">{{ this.notify }}</span>
+          <span class="badge badge-success navbar-badge">{{ 0 }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-sm-right">
           <a href="#" class="dropdown-item">
