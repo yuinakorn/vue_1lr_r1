@@ -242,7 +242,7 @@ export default {
         this.showIframe = false;
       }, 2 * 60000); // 2 min
     },
-    // 4.1: check active by client id from database
+    // 4.1: check active by client id from database #####################
     // client_id สร้างจาก random เอาไว้เช็ค
     async checkActive(client_id) {
       try {
@@ -274,7 +274,6 @@ export default {
 
               // get CID from response scope and send to ihims for check permission
               // const res_scope = response.data.scope.split(',');
-
 
               console.log("level_position => ", response.data.level_position);
 

@@ -817,8 +817,6 @@ export default {
         image: this.image,
       });
 
-
-
       let config = {
         method: "post",
         maxBodyLength: Infinity,
@@ -841,8 +839,20 @@ export default {
           }
         })
         .catch((error) => {
+          // YuiNakorn Handle error
+          var error_message = "";
+          if (!error.response) {
+            // Network error occurred
+            console.error('Network error:', error);
+            error_message = error.message;
+          } else {
+            // The server responded with a status other than 200 range
+            console.error('Error response:', error.response);
+            error_message = error.response.data.message;
+          }
+          
           this.msgshowsuccess(
-            "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + error + " )",
+            "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + error_message + " )",
             "error"
           );
         });
