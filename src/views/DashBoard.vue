@@ -126,7 +126,7 @@ export default {
           provcode: this.provCode
         }
       }
-      console.log(config)
+      // console.log(config)
       try {
         await axios(config)
           .then(response => {

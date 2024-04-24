@@ -830,38 +830,43 @@ export default {
 
       try {
         axios(config)
-        .then((response) => {
-          loadingSave.close();
-          if (response.data.message == "ok") {
-            this.msgshowsuccess("บันทึกข้อมูลสำเร็จ", "success");
-            this.goToAbout_nohistory("/backend/preg_list");
-          } else {
-            this.msgshowsuccess("บันทึกข้อมูลไม่สำเร็จ", "error");
-          }
-        })
-        .catch((error) => {
-          // YuiNakorn Handle error
-          var error_message = "";
-          if (!error.response) {
-            // Network error occurred
-            console.error('FastAPI error:', error);
-            error_message = error.message;
-          } else {
-            // The server responded with a status other than 200 range
-            console.error('Error response:', error.response);
-            error_message = JSON.stringify(error.response.data.detail.message);
-          }
+          .then((response) => {
+            loadingSave.close();
+            if (response.data.message == "ok") {
+              this.msgshowsuccess("บันทึกข้อมูลสำเร็จ", "success");
+              this.goToAbout_nohistory("/backend/preg_list");
+            } else {
+              this.msgshowsuccess("บันทึกข้อมูลไม่สำเร็จ", "error");
+            }
+          })
+          .catch((error) => {
+            // YuiNakorn Handle error
+            // Default error message
+            let errorMessage = "API Error or Duplicate data.";
 
-          this.msgshowsuccess(
-            "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + error_message + " )",
-            "error"
-          );
-        });
+            if (error.response) {
+              console.error('Error response:', error.response);
+              let res = error.response.data;
+              errorMessage = res.detail || errorMessage;
+            } else if (error.message) {
+              // Network error occurred
+              console.error('Network error:', error.message);
+              errorMessage = error.message;
+            } else {
+              // Other types of errors
+              console.error('Unknown error:', error);
+            }
+
+            this.msgshowsuccess(
+              "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + errorMessage + " )",
+              "error"
+            );
+          });
       }
       catch (error) {
         console.log(error);
       }
-      
+
     },
 
     risk_age_y(event) {
