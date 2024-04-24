@@ -847,7 +847,7 @@ export default {
             if (error.response) {
               console.error('Error response:', error.response);
               let res = error.response.data;
-              errorMessage = res.detail || errorMessage;
+              errorMessage = res.detail || res.detail.message || errorMessage;
             } else if (error.message) {
               // Network error occurred
               console.error('Network error:', error.message);
