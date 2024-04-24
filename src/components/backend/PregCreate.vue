@@ -826,9 +826,10 @@ export default {
         },
         data: data,
       };
-      console.log(data);
-      axios
-        .request(config)
+      // console.log(data);
+
+      try {
+        axios(config)
         .then((response) => {
           loadingSave.close();
           if (response.data.message == "ok") {
@@ -843,19 +844,24 @@ export default {
           var error_message = "";
           if (!error.response) {
             // Network error occurred
-            console.error('Network error:', error);
+            console.error('FastAPI error:', error);
             error_message = error.message;
           } else {
             // The server responded with a status other than 200 range
             console.error('Error response:', error.response);
-            error_message = error.response.data.message;
+            error_message = JSON.stringify(error.response.data.detail.message);
           }
-          
+
           this.msgshowsuccess(
             "เกิดความผิดพลาดในการบันทึกข้อมูล ( " + error_message + " )",
             "error"
           );
         });
+      }
+      catch (error) {
+        console.log(error);
+      }
+      
     },
 
     risk_age_y(event) {
