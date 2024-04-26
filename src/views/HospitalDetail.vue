@@ -70,10 +70,10 @@
                       <div class="dropdown-content">
                         <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid"><i
                             class="fas fa-eye"></i> ดูข้อมูลเพิ่ม</router-link>
-                        <router-link v-if="this.hoscode_main === patient.hcode"
+                        <router-link v-if="hoscode_main === patient.hcode"
                           :to="'/backend/preg_update/' + patient.hcode + '/' + patient.cid + '/' + patient.an"><i
                             class="fas fa-edit"></i> แก้ไขประวัติ</router-link>
-                        <router-link v-if="this.hoscode_main === patient.hcode"
+                        <router-link v-if="hoscode_main === patient.hcode"
                           :to="'/backend/progress_list/' + patient.hcode + '/' + patient.cid + '/' + patient.an + '/' + patient.hn"><i
                             class="fas fa-clipboard"></i> บันทึก progress</router-link>
                       </div>
@@ -133,6 +133,7 @@ export default {
   name: "HospitalDetail",
   data() {
     return {
+      hoscode_main: '',
       pregs: [],
       patients: [],
       hospital_name: '',
@@ -203,6 +204,9 @@ export default {
     }
   },
   mounted() {
+    const token = localStorage.getItem('token');
+    this.hoscode_main = JSON.parse(atob(token.split('.')[1])).hosCode;
+
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const thaiLocale = 'th-TH';
     // console.log(date);
