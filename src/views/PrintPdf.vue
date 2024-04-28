@@ -44,14 +44,15 @@
                 <span style="margin-left:0.2rem"> {{ patients.height }} ซม.</span>
 
                 <label class="ml-3"> ส่วนต่าง นน. </label>
-                <span style="margin-left:0.2rem">จาก {{ patients.weight_before_pregancy }} ไป {{ patients.weight_at_delivery
-                }} = {{ patients.weight_gain }}
+                <span style="margin-left:0.2rem">จาก {{ patients.weight_before_pregancy }} ไป {{
+                        patients.weight_at_delivery
+                    }} = {{ patients.weight_gain }}
                     กก.</span>
 
                 <label class="ml-3">ยอดมดลูก = </label>
                 <span style="margin-left:0.2rem">{{ patients.fundal_height }} ซม.</span>
 
-                <label class="ml-3"> Hematocrit = </label>
+                <label class="ml-3"> HCT. = </label>
                 <span style="margin-left:0.2rem"> {{ patients.hematocrit }} % </span>
             </div>
         </div>
@@ -149,15 +150,33 @@ export default {
         }
     },
     async created() {
-        const hoscode = this.$route.params.hoscode
-        const an = this.$route.params.an
+        this.hoscode = this.$route.params.hoscode
+        this.an = this.$route.params.an
+        this.cid = this.$route.params.cid
+        this.token = localStorage.getItem('token')
 
-        const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/' + hoscode + '/' + an
-        await axios.post(api_url)
-            .then(response => {
-                this.patients = response.data;
-                console.log(this.patients)
+        const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/'
+        let config = {
+            method: 'post',
+            url: api_url,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                "token": this.token,
+                "cid": this.cid,
+                "an": this.an,
+                "hoscode": this.hoscode,
             })
+        }
+        try {
+            const response = await axios.request(config)
+            console.log(response.data)
+            this.patients = response.data;
+        } catch (error) {
+            console.log(error);
+        }
+
     },
     mounted() {
         // get query string from url
@@ -171,9 +190,6 @@ export default {
         }, 3 * 1000);
     },
     methods: {
-        printPage() {
-            window.print();
-        },
         getStatusLabel(uc_stage) {
             if (uc_stage === '1') {
                 return 'mild'
@@ -200,11 +216,10 @@ export default {
             return datetime.toLocaleDateString(thaiLocale, options)
         },
         async fetchData() {
-            const token = localStorage.getItem('token')
 
             try {
                 let data = JSON.stringify({
-                    "token": token,
+                    "token": this.token,
                     "hcode": this.$route.params.hoscode,
                     "cid": this.$route.params.cid,
                     "an": this.$route.params.an
@@ -272,7 +287,7 @@ export default {
                 console.log(error);
             });
 
-           
+
         },
         handleLastDataPartogram(value) {
             this.lastValuePartogram = value.lastValue;
@@ -300,6 +315,7 @@ label {
     justify-content: center;
     height: 100%;
 }
+
 tbody {
     font-size: 0.86rem !important;
 }
@@ -309,6 +325,6 @@ td {
 }
 
 label {
-    font-weight: 500!important;
+    font-weight: 500 !important;
 }
-</style> 
+</style>

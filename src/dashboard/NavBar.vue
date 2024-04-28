@@ -13,9 +13,14 @@
           Dashboard</router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
+        <router-link :to="`/hospital/${this.hoscode}`" class="nav-link"><i class="nav-icon fas fa-hospital-user"></i>
+          ผู้ป่วยใน รพ. </router-link>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
         <router-link :to="{ name: 'patients' }" class="nav-link"><i class="nav-icon fas fa-user-friends"></i>
           ผู้ป่วยในเครือข่าย </router-link>
       </li>
+
       <li class="nav-item d-none d-sm-inline-block">
         <router-link :to="{ name: 'patients_conslut' }" class="nav-link" @click="toReload"> <i
             class="fas fa-file-medical-alt"></i>
@@ -60,7 +65,7 @@
           <router-link :to="{ name: 'patients_conslut' }" class="dropdown-item dropdown-footer">ดูทั้งหมด</router-link>
         </div>
       </li> -->
-      
+
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
           <i class="fas fa-inbox"></i>
@@ -81,10 +86,10 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
             <router-link :to="{ name: 'dashboard' }" class="nav-link" style="color: black!important;">
-              <i class="fas fa-history"></i> ประวัติการเข้าใช้งาน 
+              <i class="fas fa-history"></i> ประวัติการเข้าใช้งาน
             </router-link>
             <router-link :to="{ name: 'logout' }" class="nav-link" style="color: black!important;">
-              <i class="fas fa-sign-out-alt"></i> Logout 
+              <i class="fas fa-sign-out-alt"></i> Logout
             </router-link>
           </a>
         </div>

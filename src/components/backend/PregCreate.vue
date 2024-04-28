@@ -8,7 +8,7 @@
               <div class="col-md-12">
                 <h4>
                   <i class="fas fa-users"></i>
-                  เพิ่มข้อมูลหญิงตั้งครรภ์
+                  ลงทะเบียนรายใหม่
                 </h4>
               </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="form-group mx-2">
                   <router-link to="/backend/preg_list">
                     <button class="btn btn-success">
-                      <i class="fas fa-home"></i> กลับหน้าหลัก
+                      <i class="fas fa-home"></i> ทะเบียนผู้ป่วย
                     </button>
                   </router-link>
                 </div>
@@ -39,7 +39,7 @@
                   <div v-if="editdisable">
                     <button type="submit" class="btn btn-warning" :title="showtextbyval(isButtonSearchEnable)"
                       :disabled="isButtonSearchEnable">
-                      Search
+                      ค้นหา
                     </button>
                   </div>
                   <div v-else>
@@ -119,7 +119,7 @@
                     </div>
                   </div>
                   <div class="position-absolute p-3" style="top: 0px; right: 0px">
-                    <img v-if="image" :src="image" alt="Image" style="width: 148px; height: 178px" />
+                    <img v-if="image" :src="image" height="132" alt="Image"  />
                   </div>
                 </div>
                 <div class="row">
@@ -713,6 +713,27 @@ export default {
                   "error"
                 );
               } else {
+                // call for picture
+                axios({
+                  method: "post",
+                  maxBodyLength: Infinity,
+                  url: process.env.VUE_APP_API_URL + "/pregs/his/search_img/",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  data: data,
+                }).then((response) => {
+                    if (response.data) {
+                      this.image = response.data.image;
+                    }
+                  })
+                  .catch((error) => {
+                    this.msgshowsuccess(
+                      "เกิดความผิดพลาดในการค้นหา ( " + error + " )",
+                      "error"
+                    );
+                  });
+                // //
                 this.editdisable = false;
                 this.data = response.data[0];
                 this.title = response.data[0].title;
@@ -742,7 +763,7 @@ export default {
 
                 this.hematocrit = response.data[0].hematocrit;
                 this.ultrasound = response.data[0].ultrasound;
-                this.image = response.data[0].image;
+                // this.image = response.data[0].image;
                 this.status = response.data[0].status;
                 this.refer_status = response.data[0].refer_status;
                 this.cal_score();
@@ -754,8 +775,11 @@ export default {
             } else {
               this.editdisable = true;
               this.msgshowsuccess(
-                "ไม่พบข้อมูล \nไม่สามารถกรอกข้อมูลได้ \nกรุณาค้นหาอีกครั้ง",
-                "error"
+                {
+                  title: "ไม่พบข้อมูลในทะเบียนห้องคลอด",
+                  text: "ไม่สามารถกรอกข้อมูลได้ กรุณาลองอีกครั้งเมื่อเพิ่มข้อมูลในระบบแล้ว",
+                  icon: "error",
+                }
               );
             }
             loadingAlert.close();

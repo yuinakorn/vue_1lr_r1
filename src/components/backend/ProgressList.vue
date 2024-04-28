@@ -431,7 +431,7 @@
     <div class="col-md-4">
       <div class="card card-warning">
         <div class="card-header">
-          <h3 class="card-title">อัตราการเต้นหัวใจของทารกในครรภ์ (FHR)</h3>
+          <h3 class="card-title">อัตราการเต้นหัวใจของทารกในครรภ์ (FHS)</h3>
           <div class="d-flex justify-content-end">
             <button
               type="button"
@@ -450,7 +450,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">เพิ่มข้อมูลหัวใจลูก (FHR)</h4>
+              <h4 class="modal-title">เพิ่มข้อมูลหัวใจลูก (FHS)</h4>
               <button
                 type="button"
                 class="close"
@@ -1735,7 +1735,7 @@ export default {
       var showtext_code = [];
       showtext_code["C01"] = "ปากมดลูกเปิด";
       showtext_code["C02"] = "การบีบรัดของมดลูก";
-      showtext_code["C03"] = "หัวใจลูก FHR";
+      showtext_code["C03"] = "หัวใจลูก FHS";
       showtext_code["C04"] = "การตกเลือดหลังคลอด";
       showtext_code["C05"] = "หัวใจแม่ HR";
       showtext_code["C06"] = "ความดันแม่ BP";
@@ -1809,7 +1809,7 @@ export default {
         var show_caution_c01 =
           "- ปากมดลูก Progress ช้า น้อยกว่า 1 เซนติเมตร ใน 2 ชั่วโมง";
         var show_caution_c03 =
-          "- อัตราการเต้นหัวใจของทารกในครรภ์ (FHR) ต่ำกว่า 110 ครั้ง/นาที หรือมากกว่า 170 ครั้ง/นาที";
+          "- อัตราการเต้นหัวใจของทารกในครรภ์ (FHS) ต่ำกว่า 110 ครั้ง/นาที หรือมากกว่า 170 ครั้ง/นาที";
         var show_caution_c04 =
           "- การตกเลือดหลังคลอด (PPH) มากกว่า 300 มิลลิลิตร";
         var show_caution_c05 =

@@ -178,7 +178,7 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        อัตราการเต้นหัวใจลูก (FHR) <span class="float-right font-weight-bold">
+                        อัตราการเต้นหัวใจลูก (FHS) <span class="float-right font-weight-bold">
                           {{ lastValueFhs }}
                           <span class="unit">ครั้ง/นาที</span></span>
                       </a>
@@ -363,7 +363,7 @@
 
                             <div class="text-center font-1p3rem">
                               <i class="fas fa-stethoscope"></i>
-                              FHR
+                              FHS
                             </div>
 
                             <div class="text-muted text-center mb-1">
