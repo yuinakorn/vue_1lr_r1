@@ -38,7 +38,7 @@
               <div class="d-flex">
                 <div>
                   <img class="float-left img-circle hover-zoom pt-picture mr-3"
-                    :src="patients.image ? patients.image : 'images/user.png'" alt="patient_picture">
+                    :src="patients.image && patients.image !== 'None' ? patients.image : 'images/user.png'" alt="patient_picture">
                 </div>
                 <p class="d-flex flex-column">
                   <span class="text-bold text-lg"><span v-if="patients.title">

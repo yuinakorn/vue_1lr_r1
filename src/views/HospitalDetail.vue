@@ -17,7 +17,7 @@
             <div class="card-header">
               <div class="user-block">
                 <img class="img-circle hover-zoom" style="width: 45px; height: 45px"
-                  :src="patient.image ? patient.image : 'images/user.png'" alt="patient image">
+                  :src="patient.image && patient.image !== 'None' ? patient.image : 'images/user.png'" alt="patient image">
                 <div class="mb-1">
                   <span class="username" style="font-size: 1.2rem;">
                     <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid">
