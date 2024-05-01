@@ -236,6 +236,7 @@ export default {
 
 .nav-link:hover {
   color: #676767 !important;
+  border-bottom: #676767 2px solid !important;
 }
 
 .text-success {

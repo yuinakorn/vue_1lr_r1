@@ -39,39 +39,39 @@ export default {
     };
   },
   mounted() {
-    // setInterval(() => {
-    //   const now = new Date();
-    //   const hours = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
-    //   const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
-    //   const seconds = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
-    //   this.currentTime = `${hours}:${minutes}:${seconds}`;
-    // }, 1000);
+    setInterval(() => {
+      const now = new Date();
+      const hours = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
+      const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
+      const seconds = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
+      this.currentTime = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
 
-    const updateCurrentTime = () => {
-      fetch('https://worldtimeapi.org/api/timezone/Asia/Bangkok')
-        .then(response => response.json())
-        .then(data => {
-          // Extract the current time from the API response
-          const currentTime = new Date(data.utc_datetime);
+    // const updateCurrentTime = () => {
+    //   fetch('https://worldtimeapi.org/api/timezone/Asia/Bangkok')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       // Extract the current time from the API response
+    //       const currentTime = new Date(data.utc_datetime);
 
-          // Format the time as H:i:s
-          const hours = currentTime.getHours() < 10 ? `0${currentTime.getHours()}` : currentTime.getHours();
-          const minutes = currentTime.getMinutes() < 10 ? `0${currentTime.getMinutes()}` : currentTime.getMinutes();
-          const seconds = currentTime.getSeconds() < 10 ? `0${currentTime.getSeconds()}` : currentTime.getSeconds();
-          const formattedTime = `${hours}:${minutes}:${seconds}`;
+    //       // Format the time as H:i:s
+    //       const hours = currentTime.getHours() < 10 ? `0${currentTime.getHours()}` : currentTime.getHours();
+    //       const minutes = currentTime.getMinutes() < 10 ? `0${currentTime.getMinutes()}` : currentTime.getMinutes();
+    //       const seconds = currentTime.getSeconds() < 10 ? `0${currentTime.getSeconds()}` : currentTime.getSeconds();
+    //       const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-          // Update currentTime data property
-          this.currentTime = formattedTime;
-        })
-        .catch(error => {
-          console.error('Error fetching time:', error);
-        });
-    };
-    // Call the function immediately to update the time initially
-    updateCurrentTime();
+    //       // Update currentTime data property
+    //       this.currentTime = formattedTime;
+    //     })
+    //     .catch(error => {
+    //       console.error('Error fetching time:', error);
+    //     });
+    // };
+    // // Call the function immediately to update the time initially
+    // updateCurrentTime();
 
-    // Call the function repeatedly at intervals of 1 second
-    setInterval(updateCurrentTime, 1000);
+    // // Call the function repeatedly at intervals of 1 second
+    // setInterval(updateCurrentTime, 1000);
 
   },
   methods: {
