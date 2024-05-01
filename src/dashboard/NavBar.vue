@@ -9,26 +9,26 @@
         </a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'dashboard' }" class="nav-link" active-class="my-active"><i class="fas fa-tachometer-alt"></i>
+        <router-link :to="{ name: 'dashboard' }" class="nav-link my-nav-link" active-class="my-active"><i class="fas fa-tachometer-alt"></i>
           Dashboard</router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="`/hospital/${this.hoscode}`" class="nav-link" active-class="my-active"><i class="nav-icon fas fa-hospital-user"></i>
+        <router-link :to="`/hospital/${this.hoscode}`" class="nav-link my-nav-link" active-class="my-active"><i class="nav-icon fas fa-hospital-user"></i>
           ผู้ป่วยใน รพ. </router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'patients' }" class="nav-link" active-class="my-active"><i class="nav-icon fas fa-user-friends"></i>
+        <router-link :to="{ name: 'patients' }" class="nav-link my-nav-link" active-class="my-active"><i class="nav-icon fas fa-user-friends"></i>
           ผู้ป่วยในเครือข่าย </router-link>
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'patients_conslut' }" class="nav-link" active-class="my-active" @click="toReload"> <i
+        <router-link :to="{ name: 'patients_conslut' }" class="nav-link my-nav-link" active-class="my-active" @click="toReload"> <i
             class="fas fa-file-medical-alt"></i>
           <span v-if="this.notify > 0" class="badge badge-danger navbar-badge">{{ this.notify }}</span>
           เคส consult </router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'logout' }" class="nav-link" active-class="my-active"><i class="fas fa-sign-out-alt"></i> Logout</router-link>
+        <router-link :to="{ name: 'logout' }" class="nav-link my-nav-link" active-class="my-active"><i class="fas fa-sign-out-alt"></i> Logout</router-link>
       </li>
     </ul>
 
@@ -236,6 +236,9 @@ export default {
 
 .nav-link:hover {
   color: #676767 !important;
+}
+
+.my-nav-link:hover {
   border-bottom: #676767 2px solid !important;
 }
 

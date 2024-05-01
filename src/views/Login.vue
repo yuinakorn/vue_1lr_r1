@@ -16,7 +16,7 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div style="text-align: center">
                 <!-- <img src="images/onelr_new_logo.png" width="180" alt=""> -->
                 <!--                <h1 style="font-size: 6rem">1LR</h1>-->
@@ -29,13 +29,13 @@
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-12">
               <div class="img-center">
                 <img src="images/onelr_new_logo.png" width="260" alt="">
               </div>
 
             </div>
-            <div class="col-md-6" style="border-left: solid 1px #e5e5e5">
+            <div class="col-md-6 col-sm-12" style="border-left: solid 1px #e5e5e5">
               <div class="card-body">
                 <h5 class="login-box-msg">ลงชื่อเข้าใช้งาน</h5>
                 <!-- <div v-if="showAlert" class="alert alert-danger" role="alert">
