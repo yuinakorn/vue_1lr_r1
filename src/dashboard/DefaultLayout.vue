@@ -36,7 +36,7 @@ export default {
     ControlSidebar
   },
   created() {
-    $('.sidebar-mini').addClass('sidebar-collapse');
+    // $('.sidebar-mini').addClass('sidebar-collapse');
   },
   methods: {
     initializeSelect2() {

@@ -73,7 +73,7 @@ const routes = [
         }
     },
     {
-        path: '/patients/conslut',
+        path: '/patients-consult',
         name: 'patients_conslut',
         component: PregAllConsult,
         meta: {

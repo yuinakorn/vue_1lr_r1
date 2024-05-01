@@ -27,29 +27,25 @@
                with font-awesome or any other icon font library -->
           <li class="nav-header">เมนูหลัก</li>
           <li class="nav-item">
-            <router-link :to="{ name: 'dashboard' }"
-              :class="{ 'nav-link active': isActive('/#/dashboard'), 'nav-link': !isActive('/#/dashboard') }">
+            <router-link :to="{ name: 'dashboard' }" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="`/hospital/${this.hoscode}`"
-              :class="{ 'nav-link active': isActive('/#/patients'), 'nav-link': !isActive('/#/patients') }">
+            <router-link :to="`/hospital/${this.hoscode}`" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-hospital-user"> </i>
               <p>ผู้ป่วยใน รพ. </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'patients' }"
-              :class="{ 'nav-link active': isActive('/#/patients'), 'nav-link': !isActive('/#/patients') }">
+            <router-link :to="{ name: 'patients' }" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-user-friends"></i>
               <p>ผู้ป่วยในเครือข่าย </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'patients_conslut' }"
-              :class="{ 'nav-link active': isActive('/#/patients/consult'), 'nav-link': !isActive('/#/patients/consult') }">
+            <router-link :to="{ name: 'patients_conslut' }" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-file-medical-alt"></i>
               <p>เคส consult </p>
             </router-link>
@@ -57,18 +53,16 @@
 
           <li class="nav-header">การจัดการ</li>
           <li class="nav-item">
-            <a href="/#/backend/preg_create/"
-              :class="{ 'nav-link active': isActive('/#/backend/preg_list'), 'nav-link': !isActive('/#/backend/preg_create/') }">
+            <router-link :to="{ name: 'preg_create' }" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-edit"></i>
               <p>ลงทะเบียนรายใหม่</p>
-            </a>
+            </router-link>
           </li>
           <li class="nav-item">
-            <a href="/#/backend/preg_list/"
-              :class="{ 'nav-link active': isActive('/#/backend/preg_create'), 'nav-link': !isActive('/#/backend/preg_list/') }">
+            <router-link :to="{ name: 'preg_list' }" class="nav-link" active-class="active">  
               <i class="nav-icon fas fa-bed"></i>
               <p>ทะเบียนผู้ป่วยคลอด</p>
-            </a>
+            </router-link>
           </li>
 
         </ul>
