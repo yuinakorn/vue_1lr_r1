@@ -19,6 +19,8 @@
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.1",
     "core-js": "^3.8.3",
+    "datatables.net-bs5": "^2.0.7",
+    "datatables.net-vue3": "^3.0.1",
     "file-saver": "^2.0.5",
     "html2pdf.js": "^0.10.1",
     "jquery": "^3.6.4",
@@ -31,7 +33,8 @@
     "vue-chart-js": "^1.4.1",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.3",
-    "vue-sweetalert2": "^5.0.5"
+    "vue-sweetalert2": "^5.0.5",
+    "vue3-easy-data-table": "^1.5.47"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

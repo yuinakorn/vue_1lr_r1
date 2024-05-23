@@ -50,6 +50,13 @@ import "../node_modules/admin-lte/plugins/dropzone/min/dropzone.min.css"
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+// import 'bootstrap/dist/css/bootstrap.min.css'
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css'
+import 'jquery'
+import 'datatables.net'
+import 'datatables.net-bs5'
+
+
 import router from "@/router";
 
 
@@ -58,4 +65,4 @@ dom.watch()
 
 const app = createApp(App);
 
-app.use(router,VueSweetalert2).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
+app.use(router,VueSweetalert2).component("font-awesome-icon", FontAwesomeIcon,).mount('#app')

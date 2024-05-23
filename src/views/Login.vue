@@ -24,7 +24,7 @@
               <div class="login-logo mb-2">
                 <span class="onelr">One Province One Labor Room</span>
                 <div class="province">
-                  เขตสุขภาพที่ 1
+                  ห้องคลอดหนึ่งเดียว (OneLR) - เขตสุขภาพที่ 1
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@
                   <div class="mb-3">
                     <!-- <p>กรุณาเลือกโรงพยาบาล: {{ selectedHospital }}</p> -->
                     <p style="font-weight: 400;">เลือกโรงพยาบาล</p>
-                    <select class="form-control" v-model="selectedHospital">
+                    <select class="form-control" v-model="selectedHospital" :disabled="selectedProvince === '0'">
                       <option value="0" selected>เลือกโรงพยาบาล</option>
                       <option v-for="(hospital, index) in filteredHospitals" :key="index" :value="hospital.hoscode">
                         {{ hospital.hosname }}
@@ -70,7 +70,7 @@
                     <p v-else>- <i class="fas fa-lock"></i> -</p> -->
                     <div class="cf-turnstile" data-sitekey="0x4AAAAAAAWOTcmZ2DnfO2UO"></div>
                   </div>
-                  <a @click="openThaid()" class="btn btn-block btn-primary image-button">
+                  <a @click="openThaid()" class="btn btn-block btn-primary image-button" :class="{ 'disabled': selectedHospital === '0' }">
                     <img src="/images/thaid.webp" alt="ThaiD">
                     ลงชื่อใช้เข้างานด้วย ThaID
                   </a>
@@ -154,6 +154,10 @@ export default {
   computed: {
     // [UI] ฟังก์ชั่นการกรองโรงพยาบาลตามจังหวัดที่เลือก
     filteredHospitals() {
+      // return this.hospitals.filter(hospital => hospital.provinceCode === this.selectedProvince);
+      if (this.selectedProvince === "0") {
+        return [];
+      }
       return this.hospitals.filter(hospital => hospital.provinceCode === this.selectedProvince);
     }
   },
@@ -162,6 +166,10 @@ export default {
     // [UI-action] เปิดหน้าต่างสแกน QR Code thaid
     async openThaid() {
       console.log("open thaid");
+      console.log('Selected Province:', this.selectedProvince);
+      console.log('Selected Hospital:', this.selectedHospital);
+      if (this.selectedHospital === "0") return;
+
       this.countDown(this.countdown);
       this.showToastAlert(this.countdown * 1000, "info", "กำลังเปิดหน้าต่างสแกน QR Code เพื่อตรวจสอบสิทธิ");
 
@@ -464,6 +472,10 @@ export default {
   background-size: cover;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
 
 .btn-primary {
   background-color: #71b6eb;
@@ -487,10 +499,9 @@ export default {
 }
 
 .province {
-  font-size: 1.3rem;
-  font-weight: 300;
-  color: #000;
-
+  font-size: 1rem;
+  font-weight: 400;
+  color: #303030;
 }
 
 .card {

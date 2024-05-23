@@ -106,7 +106,7 @@
                       v-if="image"
                       :src="image"
                       alt="Image"
-                      style="width: 148px; height: 178px"
+                      height="132"
                     />
                   </div>
                 </div>

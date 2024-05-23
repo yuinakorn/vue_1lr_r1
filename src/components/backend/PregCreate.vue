@@ -119,7 +119,7 @@
                     </div>
                   </div>
                   <div class="position-absolute p-3" style="top: 0px; right: 0px">
-                    <img v-if="image" :src="image" height="132" alt="Image"  />
+                    <img v-if="image" :src="image" height="132" alt="Image" />
                   </div>
                 </div>
                 <div class="row">
@@ -866,7 +866,7 @@ export default {
           .catch((error) => {
             // YuiNakorn Handle error
             // Default error message
-            let errorMessage = "API Error or Duplicate data.";
+            let errorMessage = "API Error, Please Check Duplicate data.";
 
             if (error.response) {
               console.error('Error response:', error.response);

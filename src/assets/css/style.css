@@ -121,3 +121,7 @@
 .nav-link.active {
     background-color: #00D1B2!important;
 }
+
+[class*=sidebar-dark-] {
+    background-color: #2d3036!important;
+}

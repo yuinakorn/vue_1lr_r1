@@ -85,7 +85,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
-            <router-link :to="{ name: 'dashboard' }" class="nav-link" style="color: black!important;">
+            <router-link :to="{ name: 'history' }" class="nav-link" style="color: black!important;">
               <i class="fas fa-history"></i> ประวัติการเข้าใช้งาน
             </router-link>
           </a>
@@ -254,12 +254,14 @@ export default {
   cursor: pointer;
 }
 
-a .dropdown-item:active {
+.dropdown-item:active {
   color: #676767 !important;
+  background-color: #00D1B2;
 }
 
 .my-active {
-  color: #676767 !important;
-  border-bottom: #676767 2px solid !important;
+  color: #000 !important;
+  border-bottom: #000 2px solid !important;
 }
+
 </style>

@@ -35,21 +35,21 @@
             </thead>
             <tbody>
               <tr v-for="(item, index) in hospitals" :key="index">
-                <td class="px-4">
+                <td class="px-4 py-2 font-badge">
                   <router-link :to="{ name: 'hospital', params: { hoscode: item.hcode } }">
                     {{ item.hosname }}
                   </router-link>
                 </td>
                 <td class="text-center">
-                  <div class="px-3 font-badge" v-if="item.green > 0">{{ item.green }}</div>
+                  <div class="px-3 font-badge-td" v-if="item.green > 0">{{ item.green }}</div>
                   <div v-else>-</div>
                 </td>
                 <td class="text-center">
-                  <div class="px-3 font-badge" v-if="item.yellow > 0">{{ item.yellow }}</div>
+                  <div class="px-3 font-badge-td" v-if="item.yellow > 0">{{ item.yellow }}</div>
                   <div v-else>-</div>
                 </td>
                 <td class="text-center">
-                  <div class="px-3 font-badge" v-if="item.red > 0">{{ item.red }}</div>
+                  <div class="px-3 font-badge-td" v-if="item.red > 0">{{ item.red }}</div>
                   <div v-else>-</div>
                 </td>
               </tr>
@@ -169,8 +169,10 @@ export default {
 }
 
 .font-badge {
-  font-size: 1.3rem;
-  /*font-weight: normal !important;*/
+  font-size: 1rem;
+}
+.font-badge-td {
+  font-size: 1.1rem;
 }
 
 .text-green {
@@ -185,7 +187,13 @@ export default {
   color: #e90331 !important;
 }
 
-thead th {
-  font-weight: 500 !important;
+tr td {
+  padding: 1.6rem auto !important;
 }
+
+thead th {
+ font-size: 1.1rem;
+}
+
+
 </style>
