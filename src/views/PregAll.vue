@@ -14,18 +14,19 @@
             <div class="card-header" style="padding-top: 0.2rem!important;">
               <div class="user-block">
                 <img class="img-circle hover-zoom pt-picture" style="width: 45px; height: 45px;"
-                  :src="patient.image && patient.image !== 'None' ? patient.image : 'images/user.png'" alt="patient_picture">
+                  :src="patient.image && patient.image !== 'None' ? patient.image : 'images/user.png'"
+                  alt="patient_picture">
                 <div class="mb-1">
                   <span class="username" style="font-size: 1.2rem;">
-                    <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid">
+                    <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid_crypto">
                       <span v-if="patient.title">{{ patient.title }}</span>
                       {{ patient.pname + " " + patient.lname }}
                     </router-link>
                     <span v-if="patient.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
-                    <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
-                    <span v-if="patient.hosname_consult"
-                      class="alert alert-danger-consult preg-status ml-2 pointer">
+                    <span v-else-if="patient.status === 1" class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                    <span v-else class="alert alert-warning preg-status ml-2">จำหน่าย</span>
+                    <span v-if="patient.hosname_consult" class="alert alert-danger-consult preg-status ml-2 pointer">
                       Consulted
                     </span>
                   </span>
@@ -37,7 +38,7 @@
                 <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
                       class="far fa-address-card mr-1"></i></span>{{ patient.cid }}
                   <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
-                    dateFormat(patient.admit_date) }} น.
+          dateFormat(patient.admit_date) }} น.
                 </span>
 
               </div>
@@ -61,13 +62,13 @@
                     <div class="dropdown">
                       <button class="dropbtn"><i class="fas fa-external-link-alt"></i> เพิ่มเติม</button>
                       <div class="dropdown-content">
-                        <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid"><i
+                        <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid_crypto"><i
                             class="fas fa-eye"></i> ดูข้อมูลเพิ่ม</router-link>
                         <router-link v-if="this.hoscode_main === patient.hcode"
-                          :to="'/backend/preg_update/' + patient.hcode + '/' + patient.cid + '/' + patient.an"><i
+                          :to="'/backend/preg_update/' + patient.hcode + '/' + patient.cid_crypto + '/' + patient.an"><i
                             class="fas fa-edit"></i> แก้ไขประวัติ</router-link>
                         <router-link v-if="this.hoscode_main === patient.hcode"
-                          :to="'/backend/progress_list/' + patient.hcode + '/' + patient.cid + '/' + patient.an + '/' + patient.hn"><i
+                          :to="'/backend/progress_list/' + patient.hcode + '/' + patient.cid_crypto + '/' + patient.an + '/' + patient.hn"><i
                             class="fas fa-clipboard"></i> บันทึก progress</router-link>
                       </div>
                     </div>
@@ -331,6 +332,14 @@ a {
   border-color: #04c7aa !important;
 }
 
+.alert-warning {
+  padding: 0 0.5rem !important;
+  border-radius: 50px;
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+}
+
+
 .preg-status {
   font-size: 0.9rem;
   font-weight: 400;
@@ -465,5 +474,4 @@ a {
 .dropdown:hover .dropbtn {
   background-color: #b8c6d4;
 }
-
 </style>

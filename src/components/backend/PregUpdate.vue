@@ -179,7 +179,7 @@
                         class="form-control show-invalid"
                         v-model="cid"
                         :class="changclassbyval(isButtonSearchEnable)"
-                        :title="showtextbyval(isButtonSearchEnable)"
+                        :title="isButtonSearchEnable"
                         @input="validatecid(cid)"
                         autocomplete="off"
                         @keyup="cal_score"
@@ -603,9 +603,10 @@
                         "
                         autocomplete="off"
                         @change="cal_score()"
-                      >
+                      > 
                         <option value="1">คลอดแล้ว</option>
                         <option value="0">ยังไม่คลอด</option>
+                        <option value="2">จำหน่าย</option>
                       </select>
                     </div>
                   </div>
@@ -810,9 +811,12 @@ export default {
     return {
       hcode: "",
       cid: "",
+      cid_crypto: "",
       title: "",
       pname: "",
+      pname_crypto: "",
       lname: "",
+      lname_crypto: "",
       hn: "",
       an: "",
       age_y: "",
@@ -885,14 +889,20 @@ export default {
       data: data,
     };
 
+    console.log("config search => ", config)
+
     axios
       .request(config)
       .then((response) => {
+        console.log("response search => ", response)
+        this.cid_crypto = response.data.cid_crypto;
         this.data = response.data;
         this.hcode = response.data.hcode;
         this.title = response.data.title;
         this.pname = response.data.pname;
+        this.pname_crypto = response.data.pname_crypto;
         this.lname = response.data.lname;
+        this.lname_crypto = response.data.lname_crypto;
         this.cid = response.data.cid;
         this.an = response.data.an;
         this.hn = response.data.hn;
@@ -946,10 +956,11 @@ export default {
       let data = JSON.stringify({
         token: this.token,
         hcode: this.hcode,
-        cid: this.cid,
+        // cid = cid_crypto
+        cid: this.cid_crypto,
         title: this.title,
-        pname: this.pname,
-        lname: this.lname,
+        pname: this.pname_crypto,
+        lname: this.lname_crypto,
         hn: this.hn,
         an: this.an,
         age_y: this.age_y,
@@ -986,6 +997,7 @@ export default {
         },
         data: data,
       };
+      console.log("config update => ", config)
       axios
         .request(config)
         .then((response) => {
@@ -1123,19 +1135,19 @@ export default {
         return "show-valid";
       }
     },
-    showtextbyval(valchk) {
-      if (this.cid !== null && valchk !== null) {
-        if (this.cid.trim() != "") {
-          if (valchk) {
-            return "รูปแบบเลขบัตร ปปช ไม่ถูกต้องกรุณาตรวจสอบ";
-          } else {
-            return "รูปแบบเลขบัตร ถูกต้อง";
-          }
-        } else {
-          return "กรุณากรอกเลขบัตร ปปช.";
-        }
-      }
-    },
+    // showtextbyval(valchk) {
+    //   if (this.cid !== null && valchk !== null) {
+    //     if (this.cid.trim() != "") {
+    //       if (valchk) {
+    //         return "รูปแบบเลขบัตร ปปช ไม่ถูกต้องกรุณาตรวจสอบ";
+    //       } else {
+    //         return "รูปแบบเลขบัตร ถูกต้อง";
+    //       }
+    //     } else {
+    //       return "กรุณากรอกเลขบัตร ปปช.";
+    //     }
+    //   }
+    // },
     showtext(valchk, txttrue, txtfalse) {
       if (valchk) {
         return txttrue;

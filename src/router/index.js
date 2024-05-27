@@ -14,6 +14,7 @@ import ProgressList from "@/components/backend/ProgressList.vue";
 import ProgressCreate from "@/components/backend/ProgressCreate.vue";
 import InfantList from "@/components/backend/InfantList.vue";
 import HistoryLog from "@/views/HistoryLog.vue";
+import VersionDetail from "@/views/VersionDetail.vue";
 import axios from "axios";
 
 // import jwt from 'jsonwebtoken';
@@ -86,6 +87,15 @@ const routes = [
         path: '/history',
         name: 'history',
         component: HistoryLog,
+        meta: {
+            layout: 'default-layout',
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/version',
+        name: 'version',
+        component: VersionDetail,
         meta: {
             layout: 'default-layout',
             requiresAuth: true

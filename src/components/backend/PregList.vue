@@ -51,6 +51,20 @@
               >
             </div>
 
+            <div class="custom-control custom-switch mx-2">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="dcSwitch"
+                v-model="show_dc"
+                @click="resetshow"
+                @change="showchange"
+              />
+              <label class="custom-control-label" for="dcSwitch"
+                >จำหน่าย</label
+              >
+            </div>
+
             <router-link to="/backend/preg_create">
               <button class="btn btn-success ml-1">เพิ่มข้อมูล</button>
             </router-link>
@@ -117,6 +131,11 @@
             <td v-if="preg.status === 1" class="text-center">
               <span class="badge bg-success" style="font-size: 0.8rem"
                 >คลอด<br />แล้ว</span
+              >
+            </td>
+            <td v-else-if="preg.status === 2" class="text-center">
+              <span class="badge bg-warning" style="font-size: 0.8rem"
+                >จำ<br />หน่าย</span
               >
             </td>
             <td v-else class="text-center">
@@ -198,7 +217,7 @@
                   '/backend/preg_update/' +
                   preg.hcode +
                   '/' +
-                  preg.cid +
+                  preg.cid_crypto +
                   '/' +
                   preg.an
                 "
@@ -225,7 +244,7 @@
                   '/backend/progress_list/' +
                   preg.hcode +
                   '/' +
-                  preg.cid +
+                  preg.cid_crypto +
                   '/' +
                   preg.an +
                   '/' +
@@ -293,6 +312,7 @@ export default {
       show_waiting: true,
       show_deliver: false,
       show_refer_out: false,
+      show_dc: false,
     };
   },
   async created() {
@@ -340,9 +360,11 @@ export default {
           this.data = response.data.sort((a, b) =>
             a.admit_date < b.admit_date ? 1 : -1
           );
+          console.log(response.data)
           this.pregs = response.data;
           this.data_waiting = this.pregs.filter((item) => item.status == "0");
           this.data_deliver = this.pregs.filter((item) => item.status == "1");
+          this.data_dc = this.pregs.filter((item) => item.status == "2");
           this.data_refer_out = this.pregs.filter(
             (item) => item.refer_out_status == "1"
           );
@@ -689,7 +711,7 @@ export default {
     },
     showchange() {
       //this.resetshow();
-      if (this.show_waiting || this.show_deliver || this.show_refer_out) {
+      if (this.show_waiting || this.show_deliver || this.show_refer_out || this.show_dc) {
         if (this.show_waiting) {
           this.data_show = this.data_waiting;
         }
@@ -698,6 +720,9 @@ export default {
         }
         if (this.show_refer_out) {
           this.data_show = this.data_refer_out;
+        }
+        if (this.show_dc) {
+          this.data_show = this.data_dc;
         }
       } else {
         this.data_show = this.pregs;
@@ -708,6 +733,7 @@ export default {
       this.show_waiting = false;
       this.show_deliver = false;
       this.show_refer_out = false;
+      this.show_dc = false;
     },
   },
 };

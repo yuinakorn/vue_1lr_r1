@@ -155,6 +155,7 @@ export default {
         this.cid = this.$route.params.cid
         this.token = localStorage.getItem('token')
 
+        // read_patient_by_an
         const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/'
         let config = {
             method: 'post',
@@ -169,10 +170,13 @@ export default {
                 "hoscode": this.hoscode,
             })
         }
+
         try {
             const response = await axios.request(config)
-            console.log(response.data)
-            this.patients = response.data;
+            console.log("response => ", response.data)
+            this.patients = response.data[0];
+            console.log("this.patients => ", this.patients)
+
         } catch (error) {
             console.log(error);
         }
@@ -186,7 +190,8 @@ export default {
 
         //delay 3 sec
         setTimeout(() => {
-            window.print();
+            // this print func
+            // window.print();
         }, 3 * 1000);
     },
     methods: {

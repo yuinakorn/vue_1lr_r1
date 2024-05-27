@@ -46,7 +46,8 @@
                     </span>{{ patients.pname + " " + patients.lname }}
                     <span v-if="patients.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
-                    <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                      <span v-else-if="patients.status === 1" class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                    <span v-else class="alert alert-warning preg-status ml-2">จำหน่าย</span>
                     <span v-if="isConsulted" id="is_consulted" class="alert alert-danger-consult preg-status ml-2">
                       Consulted
                     </span>
@@ -563,8 +564,8 @@ export default {
 
     try {
       const response = await axios.request(config)
-      // console.log(response.data)
-      this.patients = response.data;
+      console.log("data from patient an => ",response.data)
+      this.patients = response.data[0];
       this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
       this.score = this.patients.cpd_risk_score
 
@@ -1050,6 +1051,14 @@ export default {
   background-color: #04c7aa !important;
   border-color: #04c7aa !important;
 }
+
+.alert-warning {
+  padding: 0 0.5rem !important;
+  border-radius: 50px;
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+}
+
 
 .my-alert {
   /* font-size: 1.2rem; */

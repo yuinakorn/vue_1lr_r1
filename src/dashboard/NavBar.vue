@@ -34,46 +34,15 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notify message -->
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">{{ this.notify }}</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-          <div v-for="(patient, index) in this.patients" :key="index">
-            <a class="dropdown-item pointer">
-
-              <div class="media">
-                <img :src="patient.image ? patient.image : 'images/user.png'" alt="patient_picture"
-                  class="img-size-50 mr-3 img-circle" style="width: 40px; height: 40px">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    <span v-if="patient.title">{{ patient.title }}</span>
-                    {{ patient.pname + " " + patient.lname }}
-                    <span :class="cpdscore(patient.cpd_risk_score)"><i class="fas fa-circle"></i></span>
-                  </h3>
-                  <p class="text-sm">{{ patient.hosname }}</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ this.timePassed }}</p>
-                </div>
-              </div>
-
-            </a>
-            <div class="dropdown-divider"></div>
-          </div>
-
-          <router-link :to="{ name: 'patients_conslut' }" class="dropdown-item dropdown-footer">ดูทั้งหมด</router-link>
-        </div>
-      </li> -->
 
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
           <i class="fas fa-inbox"></i>
-          <span class="badge badge-success navbar-badge">{{ 0 }}</span>
+          <span class="badge badge-success navbar-badge">{{ this.version_count }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-sm-right">
           <a href="#" class="dropdown-item">
-            <router-link :to="{ name: 'dashboard' }" class="nav-link" style="color: black!important;">
+            <router-link :to="{ name: 'version' }" class="nav-link" style="color: black!important;">
               <i class="fas fa-code-branch"> </i> รายละเอียด Version
             </router-link>
           </a>
@@ -113,7 +82,8 @@ export default {
       hosname: '',
       notify: 0,
       patients: [],
-      timePassed: 0
+      timePassed: 0,
+      version_count: 0
     }
   },
   mounted() {
@@ -127,6 +97,7 @@ export default {
         this.notifyCount()
       }, 1.5 * 60 * 1000) // 1.5 min
     }
+    this.getVersionDetail();
   },
   methods: {
     toReload() {
@@ -176,44 +147,26 @@ export default {
       this.notify = response.data.count
 
     },
+    async getVersionDetail() {
+            const config = {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: process.env.VUE_APP_API_URL + '/dashboard/version/',
+                data: {
+                    token: localStorage.getItem('token')
+                }
+            };
+            try {
+                const response = await axios(config);
+                this.version_count = response.data.length;
+                
 
-    // async notiCaseConsult() {
-    //   console.log('notiCaseConsult')
-    //   const token = localStorage.getItem('token');
-    //   let payload = JSON.stringify({
-    //     "token": token,
-    //   });
-    //   let config = {
-    //     method: 'post',
-    //     url: process.env.VUE_APP_API_URL + "/dashboard/pregs_consult/",
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     data: payload
-    //   }
-    //   const response = await axios(config)
-    //   this.notify = response.data.length
-    //   this.patients = response.data
-    //   console.log(this.patients)
-
-    //   // time passed is calculated from the time of the last consult
-    //   this.patients.forEach(patient => {
-    //     let lastConsult = new Date(patient.datetime_created)
-    //     let now = new Date()
-    //     let diff = now - lastConsult
-    //     let minutes = Math.floor((diff / 1000) / 60)
-    //     let hours = Math.floor(minutes / 60)
-    //     let days = Math.floor(hours / 24)
-    //     if (days > 0) {
-    //       this.timePassed = days + ' วันที่แล้ว'
-    //     } else if (hours > 0) {
-    //       this.timePassed = hours + ' ชั่วโมงที่แล้ว'
-    //     } else {
-    //       this.timePassed = minutes + ' นาทีที่แล้ว'
-    //     }
-    //   })
-
-    // }
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
   }
 

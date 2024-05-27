@@ -20,13 +20,15 @@
                   :src="patient.image && patient.image !== 'None' ? patient.image : 'images/user.png'" alt="patient_picture">
                 <div class="mb-1">
                   <span class="username" style="font-size: 1.2rem;">
-                    <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid">
+                    <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid_crypto">
                       <span v-if="patient.title">{{ patient.title }}</span>
                       {{ patient.pname + " " + patient.lname }}
                     </router-link>
                     <span v-if="patient.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
-                    <span v-else class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                    <span v-else-if="patient.status === 1" class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                    <span v-else class="alert alert-warning preg-status ml-2">จำหน่าย</span>
+
                     <span v-if="patient.hosname_consult" @click="togglePopover"
                       class="alert alert-danger-consult preg-status ml-2">
                       Consulted
@@ -65,7 +67,7 @@
                     <div class="dropdown">
                       <button class="dropbtn"><i class="fas fa-external-link-alt"></i> เพิ่มเติม</button>
                       <div class="dropdown-content">
-                        <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid"><i
+                        <router-link :to="'/patient/' + patient.hcode + '/' + patient.an + '/' + patient.cid_crypto"><i
                             class="fas fa-eye"></i> ดูข้อมูลเพิ่ม</router-link>
                         <router-link v-if="this.hoscode_main === patient.hcode"
                           :to="'/backend/preg_update/' + patient.hcode + '/' + patient.cid + '/' + patient.an"><i
@@ -348,6 +350,13 @@ a {
   border-radius: 50px;
   background-color: #04c7aa !important;
   border-color: #04c7aa !important;
+}
+
+.alert-warning {
+  padding: 0 0.5rem !important;
+  border-radius: 50px;
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
 }
 
 .preg-status {
