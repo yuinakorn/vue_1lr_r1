@@ -132,7 +132,7 @@
             patients.gravida }}</span>
                 </div>
                 <div><i class="fas fa-stethoscope icon-blue ml-4"></i> ANC = <span class="text-muted"> {{
-            patients.anc_check_up }} ครั้ง</span></div>
+            patients.no_of_anc }} ครั้ง</span></div>
                 <div><i class="fas fa-child icon-blue ml-4"></i> GA = <span class="text-muted">{{
             patients.ga
           }} สัปดาห์</span></div>
