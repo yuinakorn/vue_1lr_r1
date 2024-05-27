@@ -139,6 +139,7 @@
                         class="form-control"
                         name="pname"
                         id="pname"
+                        disabled
                         v-model="pname"
                         :class="changclassbyval(chkempty(pname))"
                         :title="
@@ -159,6 +160,7 @@
                         class="form-control"
                         name="lname"
                         id="lname"
+                        disabled
                         v-model="lname"
                         :class="changclassbyval(chkempty(lname))"
                         :title="
@@ -177,6 +179,7 @@
                       <input
                         type="text"
                         class="form-control show-invalid"
+                        disabled
                         v-model="cid"
                         :class="changclassbyval(isButtonSearchEnable)"
                         :title="isButtonSearchEnable"
@@ -196,6 +199,7 @@
                         class="form-control"
                         name="hn"
                         id="hn"
+                        disabled
                         v-model="hn"
                         :class="changclassbyval(chkempty(hn))"
                         :title="showtext(chkempty(hn), 'กรุณากรอกข้อมูล', '')"
@@ -214,6 +218,7 @@
                         class="form-control"
                         name="an"
                         id="an"
+                        disabled
                         v-model="an"
                         :class="changclassbyval(chkempty(an))"
                         :title="showtext(chkempty(an), 'กรุณากรอกข้อมูล', '')"

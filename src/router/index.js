@@ -15,6 +15,7 @@ import ProgressCreate from "@/components/backend/ProgressCreate.vue";
 import InfantList from "@/components/backend/InfantList.vue";
 import HistoryLog from "@/views/HistoryLog.vue";
 import VersionDetail from "@/views/VersionDetail.vue";
+import ComingSoon from "@/views/ComingSoon.vue";
 import axios from "axios";
 
 // import jwt from 'jsonwebtoken';
@@ -96,6 +97,15 @@ const routes = [
         path: '/version',
         name: 'version',
         component: VersionDetail,
+        meta: {
+            layout: 'default-layout',
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/coming-soon',
+        name: 'comingsoon',
+        component: ComingSoon,
         meta: {
             layout: 'default-layout',
             requiresAuth: true

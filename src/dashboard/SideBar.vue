@@ -25,7 +25,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-header">เมนูหลัก</li>
+          <li class="nav-header text-bold">เมนูหลัก</li>
           <li class="nav-item">
             <router-link :to="{ name: 'dashboard' }" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -51,7 +51,7 @@
             </router-link>
           </li>
 
-          <li class="nav-header">การจัดการ</li>
+          <li class="nav-header text-bold">การจัดการ</li>
           <li class="nav-item">
             <router-link :to="{ name: 'preg_create' }" class="nav-link" active-class="active">
               <i class="nav-icon fas fa-edit"></i>
@@ -62,6 +62,12 @@
             <router-link :to="{ name: 'preg_list' }" class="nav-link" active-class="active">  
               <i class="nav-icon fas fa-bed"></i>
               <p>ทะเบียนผู้ป่วยคลอด</p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{ name: 'logout' }" class="nav-link" active-class="active">  
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
             </router-link>
           </li>
 

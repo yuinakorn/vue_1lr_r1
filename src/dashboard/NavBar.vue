@@ -9,27 +9,31 @@
         </a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'dashboard' }" class="nav-link my-nav-link" active-class="my-active"><i class="fas fa-tachometer-alt"></i>
+        <router-link :to="{ name: 'dashboard' }" class="nav-link my-nav-link" active-class="my-active"><i
+            class="fas fa-tachometer-alt"></i>
           Dashboard</router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="`/hospital/${this.hoscode}`" class="nav-link my-nav-link" active-class="my-active"><i class="nav-icon fas fa-hospital-user"></i>
+        <router-link :to="`/hospital/${this.hoscode}`" class="nav-link my-nav-link" active-class="my-active"><i
+            class="nav-icon fas fa-hospital-user"></i>
           ผู้ป่วยใน รพ. </router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'patients' }" class="nav-link my-nav-link" active-class="my-active"><i class="nav-icon fas fa-user-friends"></i>
+        <router-link :to="{ name: 'patients' }" class="nav-link my-nav-link" active-class="my-active"><i
+            class="nav-icon fas fa-user-friends"></i>
           ผู้ป่วยในเครือข่าย </router-link>
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'patients_conslut' }" class="nav-link my-nav-link" active-class="my-active" @click="toReload"> <i
-            class="fas fa-file-medical-alt"></i>
+        <router-link :to="{ name: 'patients_conslut' }" class="nav-link my-nav-link" active-class="my-active"
+          @click="toReload"> <i class="fas fa-file-medical-alt"></i>
           <span v-if="this.notify > 0" class="badge badge-danger navbar-badge">{{ this.notify }}</span>
           เคส consult </router-link>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <router-link :to="{ name: 'logout' }" class="nav-link my-nav-link" active-class="my-active"><i class="fas fa-sign-out-alt"></i> Logout</router-link>
-      </li>
+      <!-- <li class="nav-item d-none d-sm-inline-block">
+        <router-link :to="{ name: 'logout' }" class="nav-link my-nav-link" active-class="my-active"><i
+            class="fas fa-sign-out-alt"></i> Logout</router-link>
+      </li> -->
     </ul>
 
     <!-- Right navbar links -->
@@ -50,7 +54,20 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
-          {{ hosname }}
+          <i class="fas fa-book"></i> คู่มือ
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a :href="manualWeb" target="_blank" class="nav-link dropdown-item" style="color: black!important;">
+            <i class="fas fa-book"></i> คู่มือการใช้งานบนเว็บ
+          </a>
+          <router-link :to="{ name: 'comingsoon' }" class="nav-link dropdown-item" style="color: black!important;">
+            <i class="fas fa-mobile"></i> คู่มือการใช้งานบนมือถือ
+          </router-link>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="" style="color: #000!important;">
+          <i class="fas fa-user"></i> {{ hosname }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
@@ -63,7 +80,7 @@
               <i class="fas fa-sign-out-alt"></i> Logout
             </router-link>
           </a>
-          
+
         </div>
       </li>
     </ul>
@@ -83,7 +100,8 @@ export default {
       notify: 0,
       patients: [],
       timePassed: 0,
-      version_count: 0
+      version_count: 0,
+      manualWeb: process.env.VUE_APP_MANUAL_WEB
     }
   },
   mounted() {
@@ -148,25 +166,25 @@ export default {
 
     },
     async getVersionDetail() {
-            const config = {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                url: process.env.VUE_APP_API_URL + '/dashboard/version/',
-                data: {
-                    token: localStorage.getItem('token')
-                }
-            };
-            try {
-                const response = await axios(config);
-                this.version_count = response.data.length;
-                
-
-            } catch (error) {
-                console.log(error);
-            }
+      const config = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
         },
+        url: process.env.VUE_APP_API_URL + '/dashboard/version/',
+        data: {
+          token: localStorage.getItem('token')
+        }
+      };
+      try {
+        const response = await axios(config);
+        this.version_count = response.data.length;
+
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
   }
 
@@ -216,5 +234,4 @@ export default {
   color: #000 !important;
   border-bottom: #000 2px solid !important;
 }
-
 </style>
