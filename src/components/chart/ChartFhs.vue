@@ -59,7 +59,9 @@ export default {
         this.lastUpdate = this.data[this.data.length - 1].update_time;
 
         //  set rate limit here
-        this.overRateLimit = Math.abs(this.data[this.data.length - 1].value) < 110;
+        // set rate limit < 110 or > 170
+
+        this.overRateLimit = Math.abs(this.data[this.data.length - 1].value) < 110 || Math.abs(this.data[this.data.length - 1].value) > 170;
 
         // Emit a last-value event with the lastValue as the payload
         this.$emit('last-data-fhs', {

@@ -89,8 +89,8 @@
                         <td>หมายเหตุ</td>
                     </tr>
                     <tr style="font-weight: 500;">
-                        <td>D</td>
-                        <td>I</td>
+                        <td>&nbsp; D &nbsp;</td>
+                        <td>&nbsp; I &nbsp;</td>
                         <td>แรง</td>
                         <td>Cx(cm.)</td>
                         <td>Eff% / St.</td>
@@ -191,7 +191,7 @@ export default {
         //delay 3 sec
         setTimeout(() => {
             // this print func
-            // window.print();
+            window.print();
         }, 3 * 1000);
     },
     methods: {

@@ -273,7 +273,7 @@
               <button
                 title="ลบข้อมูล"
                 class="btn btn-danger btn-sm ml-1"
-                @click="delete_preg(preg.cid, preg.an, preg.pname, preg.lname)"
+                @click="delete_preg(preg.cid_crypto, preg.an, preg.pname, preg.lname)"
               >
                 <i class="fas fa-trash"></i>
               </button>

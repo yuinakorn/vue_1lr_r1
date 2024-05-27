@@ -30,7 +30,9 @@ import "../node_modules/admin-lte/plugins/jquery/jquery.min.js"
 import "../node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js"
 import "../node_modules/admin-lte/plugins/inputmask/jquery.inputmask.min.js"
 //import "../node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"
-import "../node_modules/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+
+// ทดสอบเอาออก
+// import "../node_modules/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
 import "../node_modules/admin-lte/plugins/bs-stepper/js/bs-stepper.min.js"
 import "../node_modules/admin-lte/plugins/dropzone/min/dropzone.min.js"
 

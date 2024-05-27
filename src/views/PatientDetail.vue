@@ -20,9 +20,12 @@
 
             <!-- col2 -->
             <div>
-              <button class="btn btn-outline bg-light mr-2" @click="showConsultBox"><i class="fas fa-eye"></i> ส่ง
+              <!-- <button type="button" class="btn btn-outline bg-light mr-2" data-toggle="modal" data-target="#DiagModal">
+                <i class="fas fa-notes-medical"></i> ลงคำวินิจฉัย
+              </button> -->
+              <button class="btn btn-outline bg-light mr-2" @click="showConsultBox"><i
+                  class="fas fa-file-medical-alt"></i> ส่ง
                 Consult</button>
-
               <router-link class="btn btn-outline bg-light"
                 :to="'/print/' + this.hoscode + '/' + this.an + '/' + this.cid + '?hospital_name=' + hospital_name"><i
                   class="fas fa-print"></i> พิมพ์</router-link>
@@ -31,6 +34,46 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="DiagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">ลงผลคำวินิจฉัย</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <form>
+                    <div class="form-group">
+                      <label for="diagnosisDetail">คำวินิจฉัย</label>
+                      <div><small>พิมพ์คำวินิจฉัยหรือข้อความที่ต้องการสื่อสารกัน</small></div>
+                      <textarea class="form-control" rows="5" id="diagnosisDetail" name="diagnosisDetail"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="doctorName">ชื่อแพทย์ </label>
+                      <div><small>ชื่อแพทย์หรือชื่อผู้ส่งข้อความ</small></div>
+                      <input type="text" class="form-control" id="doctorName" name="doctorName">
+                    </div>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
+
       <div class="row">
         <div class="col-md-12 col-lg-12">
           <div class="card">
@@ -38,7 +81,8 @@
               <div class="d-flex">
                 <div>
                   <img class="float-left img-circle hover-zoom pt-picture mr-3"
-                    :src="patients.image && patients.image !== 'None' ? patients.image : 'images/user.png'" alt="patient_picture">
+                    :src="patients.image && patients.image !== 'None' ? patients.image : 'images/user.png'"
+                    alt="patient_picture">
                 </div>
                 <p class="d-flex flex-column">
                   <span class="text-bold text-lg"><span v-if="patients.title">
@@ -46,7 +90,7 @@
                     </span>{{ patients.pname + " " + patients.lname }}
                     <span v-if="patients.status === 0"
                       class="alert alert-default-danger preg-status ml-2">ยังไม่คลอด</span>
-                      <span v-else-if="patients.status === 1" class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
+                    <span v-else-if="patients.status === 1" class="alert alert-success preg-status ml-2">คลอดแล้ว</span>
                     <span v-else class="alert alert-warning preg-status ml-2">จำหน่าย</span>
                     <span v-if="isConsulted" id="is_consulted" class="alert alert-danger-consult preg-status ml-2">
                       Consulted
@@ -58,7 +102,7 @@
                   <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
                         class="far fa-address-card mr-1"></i></span>{{ patients.cid }}
                     <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
-                      dateFormat(patients.admit_date) }} น.
+            dateFormat(patients.admit_date) }} น.
                   </span>
                 </p>
                 <div class="ml-auto d-flex text-right">
@@ -66,7 +110,7 @@
                     <span v-if="toAlarm" class="alert alert-danger pulse my-alert"><i class="fas fa-ambulance"></i>
                       <strong> คำแนะนำ: </strong>ควรประสานให้ส่งต่อทันที !</span>
                     <span :class="scoreClass(patients.cpd_risk_score)" style="font-size: 1.2rem"> CPD. {{
-                    patients.cpd_risk_score }}</span>
+            patients.cpd_risk_score }}</span>
                   </div>
                 </div>
                 <div class="card-tools">
@@ -193,8 +237,7 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        การบีบรัดของมดลูก (interval/duration/intensity)<span
-                          class="float-right font-weight-bold">
+                        การบีบรัดของมดลูก (interval/duration/intensity)<span class="float-right font-weight-bold">
                           {{ lastValueInterval }} นาที / {{ lastValueDuration }} วินาที / {{ lastValueIntensity }}
                           <!--                    <span class="unit">นาที/ระดับความแรง</span>-->
                         </span>
@@ -545,7 +588,6 @@ export default {
     const an = this.$route.params.an
     this.an = an
     this.cid = this.$route.params.cid
-    // const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/' + hoscode + '/' + an
     const api_url = process.env.VUE_APP_API_URL + '/dashboard/patient/'
     let config = {
       method: 'post',
@@ -564,7 +606,7 @@ export default {
 
     try {
       const response = await axios.request(config)
-      console.log("data from patient an => ",response.data)
+      console.log("data from patient an => ", response.data)
       this.patients = response.data[0];
       this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
       this.score = this.patients.cpd_risk_score
@@ -580,12 +622,6 @@ export default {
       console.log(error)
     }
 
-    // await axios.post(config)
-    //   .then(response => {
-    //     this.patients = response.data;
-    //     this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
-    //     this.score = this.patients.cpd_risk_score
-    //   })
   },
   mounted() {
     // this.fetchConsultation();
@@ -609,36 +645,6 @@ export default {
   },
 
   methods: {
-
-    // async fetchConsultation() {
-    //   const token = localStorage.getItem('token');
-    //   let config = {
-    //     method: 'post',
-    //     url: process.env.VUE_APP_API_URL + '/pregs/check_consulted/',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     data: JSON.stringify({
-    //       "hoscode": this.hoscode,
-    //       "an": this.an,
-    //       "cid": this.cid,
-    //       "token": token
-    //     })
-    //   };
-
-    //   try {
-    //     const response = await axios.request(config);
-    //     console.log(response.data);
-
-    //     if (response.data.length > 0) {
-    //       this.isConsulted = true;
-    //       this.consultName = response.data[0].hosname;
-    //     }
-
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
 
     async showConsultBox() {
       const token = localStorage.getItem('token');
@@ -949,6 +955,10 @@ export default {
   color: #58a7ff;
 }
 
+.btn-primary {
+  background-color: #7cb8e2 !important;
+  border-color: #7cb8e2 !important;
+}
 .card-body .nav-link {
   padding-top: 0.1rem !important;
   padding-bottom: 0 !important;
@@ -1107,10 +1117,10 @@ export default {
   border-color: #ced8e2 !important;
 }
 
-.btn-primary {
+/* .btn-primary {
   background-color: #5d7289 !important;
   border-color: #5d7289 !important;
-}
+} */
 
 .popup {
   position: fixed;
@@ -1134,5 +1144,15 @@ export default {
   padding-top: 0.2rem !important;
   padding-bottom: 0 !important;
   border-bottom: 0 !important;
+}
+
+small {
+  color: #5d7289;
+}
+
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        max-width: 70%;
+    }
 }
 </style>
