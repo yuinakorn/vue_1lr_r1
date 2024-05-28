@@ -81,7 +81,7 @@ export default {
                 this.$nextTick(() => {
                     $('#datatable').DataTable({
                         pageLength: 25,
-                        order: [[1, 'desc']],
+                        order: [[0, 'desc']],
 
                     });
                 });

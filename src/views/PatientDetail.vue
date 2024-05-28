@@ -41,7 +41,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">ลงผลคำวินิจฉัย</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">ลงผลคำวินิจฉัย </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -50,6 +50,10 @@
               <div class="row">
                 <div class="col-md-12">
                   <form>
+                    <!-- <div class="form-group">
+                      <label for="patientName">ชื่อผู้ป่วย</label>
+                      <input type="text" class="form-control" id="patientName" name="patientName" v-model="patientName">
+                    </div> -->
                     <div class="form-group">
                       <label for="diagnosisDetail">คำวินิจฉัย</label>
                       <div><small>พิมพ์คำวินิจฉัยหรือข้อความที่ต้องการสื่อสารกัน</small></div>
@@ -97,8 +101,10 @@
                     </span>
                   </span>
                   <span class="fw-600">{{ hospital_name }}</span>
-                  <span class="description text-mutedd">HN: {{ patients.hn }} AN: {{ patients.an }}
-                    อายุ: {{ patients.age_y }} ปี</span>
+                  <span class="description text-mutedd">
+                    <span class="ml-1" style="font-weight: 600;">HN:</span> {{ patients.hn }}
+                    <span class="ml-1" style="font-weight: 600;">AN:</span> {{ patients.an }}
+                    <span class="ml-1" style="font-weight: 600;">อายุ:</span> {{ patients.age_y }} ปี</span>
                   <span class="description my-des2"><span class="badge bg-info badge-bigger mr-1"><i
                         class="far fa-address-card mr-1"></i></span>{{ patients.cid }}
                     <span class="badge bg-info badge-bigger ml-3 mr-1"><i class="fas fa-procedures"></i></span> {{
@@ -537,6 +543,7 @@ export default {
   },
   data() {
     return {
+      patientName: '',
       token: localStorage.getItem('token'),
       lastValueFhs: null,
       lastUpdateFhs: '',
@@ -608,6 +615,7 @@ export default {
       const response = await axios.request(config)
       console.log("data from patient an => ", response.data)
       this.patients = response.data[0];
+      this.patientName = this.patients.pname + " " + this.patients.lname
       this.weight_gain = this.patients.weight_at_delivery - this.patients.weight_before_pregancy
       this.score = this.patients.cpd_risk_score
 
@@ -956,9 +964,15 @@ export default {
 }
 
 .btn-primary {
+  background-color: #5cafeb !important;
+  border-color: #5cafeb !important;
+}
+
+.btn-primary:hover {
   background-color: #7cb8e2 !important;
   border-color: #7cb8e2 !important;
 }
+
 .card-body .nav-link {
   padding-top: 0.1rem !important;
   padding-bottom: 0 !important;
@@ -1151,8 +1165,10 @@ small {
 }
 
 @media (min-width: 992px) {
-    .modal-lg, .modal-xl {
-        max-width: 70%;
-    }
+
+  .modal-lg,
+  .modal-xl {
+    max-width: 70%;
+  }
 }
 </style>
