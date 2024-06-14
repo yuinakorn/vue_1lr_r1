@@ -866,7 +866,7 @@ export default {
           .catch((error) => {
             // YuiNakorn Handle error
             // Default error message
-            let errorMessage = "API Error, Please Check Duplicate data.";
+            let errorMessage = '';
 
             if (error.response) {
               console.error('Error response:', error.response);
@@ -887,6 +887,7 @@ export default {
             } else {
               // Other types of errors
               console.error('Unknown error:', error);
+              errorMessage = error;
             }
             Swal.fire({
               title: "Error!",
